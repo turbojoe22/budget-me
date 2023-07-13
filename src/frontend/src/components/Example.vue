@@ -4,7 +4,7 @@
     <p>{{ answer }}</p>
     <h2>Connect To Plaid</h2>
         <button @click="connectToBank">Link Account</button>
-        <p>{{ hi }}</p>
+        <p>{{}}</p>
 </template>
 
 <script>
@@ -14,9 +14,7 @@ mounted(){
       Plaid.setAttribute('src', 'https://cdn.plaid.com/link/v2/stable/link-initialize.js')
       document.head.appendChild(Plaid)
     },
-beforeMount(){
-  this.hi = window.Plaid
-  },
+
   name: 'HomePage',
   data() {
     return {
@@ -36,10 +34,23 @@ methods: {
 
     async connectToBank() {
       const handler = window.Plaid.create({
-         token : await fetch("api/exchangePublicToken"),
+         token : await fetch("api/generateLinkToken"),
+
          onSuccess: async (publicToken, metadata) => {
            console.log(`Finished with Link! ${JSON.stringify(metadata)}`);
-           const accessToken = await fetch ("/api/")
+           try {
+
+           const publicToken = await fetch ("/api/createPublicToken", {
+           method: 'POST',
+           headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+           body: JSON.stringify({publicToken})
+           })
+
+
+
+           } catch (error){
+           console.log('Error, ${JSON.stringify(err)');
+           }
          },
          onExit: async (err, metadata) => {
            console.log(

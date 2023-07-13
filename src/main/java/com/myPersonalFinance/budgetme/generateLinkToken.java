@@ -8,9 +8,7 @@ import com.plaid.client.request.PlaidApi;
 import com.sun.net.httpserver.HttpExchange;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.HttpHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
 
 import java.io.IOException;
@@ -26,7 +24,7 @@ import java.util.List;
 
         private static PlaidApi plaidClient;
     @GetMapping(path = "generateLinkToken")
-        public LinkTokenCreateResponse handle() throws IOException {
+        public String handle() throws IOException {
 
             // Create your Plaid client
 
@@ -72,13 +70,24 @@ import java.util.List;
                     .execute();
 
             // Send the data to the client
+        System.out.println(response.body().getLinkToken());
+            return response.body().getLinkToken();
+        }
+        @PostMapping(path = "createPublicToken", consumes = "application/x-www-form-urlencoded;charset=UTF-8", produces = "application/json")
+        public ItemPublicTokenCreateResponse createPublicToken(PlaidApi plaidClient, @RequestBody String linkToken) throws IOException {
+
+            ItemPublicTokenCreateRequest request = new ItemPublicTokenCreateRequest()
+
+                    .accessToken(linkToken);
+
+            Response<ItemPublicTokenCreateResponse> response = plaidClient
+                    .itemCreatePublicToken(request)
+                    .execute();
+            System.out.println(response);
 
             return response.body();
-        }
-//        @GetMapping(path = "exchangePublicToken")
-//        public exchangePublicToken idk() throws IOException {
-//
-//    }
+
+    }
 
     @GetMapping(path = "getAnswer")
     public ResponseEntity<?> getAnswer() {
