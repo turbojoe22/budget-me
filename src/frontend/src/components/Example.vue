@@ -36,9 +36,8 @@ mounted(){
     async connectToBank() {
         const response = await fetch("/api/generateLinkToken");
         const plResponse = await response.json();
-        this.link_token = plResponse.link_token;
+        this.link_token = plResponse.linkToken;
         console.log(this.link_token);
-
 
     }
   }

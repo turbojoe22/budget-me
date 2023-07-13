@@ -35,7 +35,7 @@ import java.util.List;
 
             apiKeys.put("clientId", "64a72eb489f8b500199bbbd0");
 
-            apiKeys.put("secret", "48158393baddf3a9bb20423f5e44da");
+            apiKeys.put("secret", "d2c7d5dd31c038447448eed176d954");
 
             ApiClient apiClient = new ApiClient(apiKeys);
 
