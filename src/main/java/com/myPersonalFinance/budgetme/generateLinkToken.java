@@ -35,7 +35,7 @@ import java.util.List;
 
             apiKeys.put("clientId", "64a72eb489f8b500199bbbd0");
 
-            apiKeys.put("secret", "d2c7d5dd31c038447448eed176d954");
+            apiKeys.put("secret", "48158393baddf3a9bb20423f5e44da");
 
             ApiClient apiClient = new ApiClient(apiKeys);
 
@@ -74,8 +74,12 @@ import java.util.List;
             // Send the data to the client
 
             return response.body();
-
         }
+//        @GetMapping(path = "exchangePublicToken")
+//        public exchangePublicToken idk() throws IOException {
+//
+//    }
+
     @GetMapping(path = "getAnswer")
     public ResponseEntity<?> getAnswer() {
         HashMap<String, String> response = new HashMap<>();
