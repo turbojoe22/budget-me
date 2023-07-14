@@ -9,11 +9,6 @@
 
 <script>
 export default {
-mounted(){
-      let Plaid = document.createElement('script')
-      Plaid.setAttribute('src', 'https://cdn.plaid.com/link/v2/stable/link-initialize.js')
-      document.head.appendChild(Plaid)
-    },
 
   name: 'HomePage',
   data() {
@@ -21,6 +16,7 @@ mounted(){
      answer: "",
      pl: null,
      link_token: null,
+
     };
   },
 methods: {
@@ -31,23 +27,33 @@ methods: {
       console.log(answer.data);
     },
 
+    async getAccessToken(publicToken) {
+     const publicTokenResponse = await fetch ("/api/createAccessToken", {
+               method: 'POST',
+               headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+               body: JSON.stringify({public_token: publicToken})
+               });
+     const accessToken = await publicTokenResponse.json();
+     console.log(accessToken);
+     return accessToken;
+     },
+
+     async getLinkToken() {
+     const linkTokenResponse =  await fetch("api/generateLinkToken");
+     const linkToken = await linkTokenResponse.json();
+     console.log(linkToken)
+     return linkToken;
+     },
 
     async connectToBank() {
-      const handler = window.Plaid.create({
-         token : await fetch("api/generateLinkToken"),
+      const handler = Plaid.create({
+         token : this.getLinkToken(),
 
          onSuccess: async (publicToken, metadata) => {
            console.log(`Finished with Link! ${JSON.stringify(metadata)}`);
            try {
-
-           const publicToken = await fetch ("/api/createPublicToken", {
-           method: 'POST',
-           headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-           body: JSON.stringify({publicToken})
-           })
-
-
-
+           const access_token = this.getAccessToken(publicToken);
+           console.log(access_token);
            } catch (error){
            console.log('Error, ${JSON.stringify(err)');
            }

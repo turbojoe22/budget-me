@@ -73,19 +73,19 @@ import java.util.List;
         System.out.println(response.body().getLinkToken());
             return response.body().getLinkToken();
         }
-        @PostMapping(path = "createPublicToken", consumes = "application/x-www-form-urlencoded;charset=UTF-8", produces = "application/json")
-        public ItemPublicTokenCreateResponse createPublicToken(PlaidApi plaidClient, @RequestBody String linkToken) throws IOException {
+        @PostMapping(path = "createAccessToken", consumes = "application/x-www-form-urlencoded;charset=UTF-8", produces = "application/json")
+        public ItemPublicTokenExchangeResponse createAccessToken(PlaidApi plaidClient, @RequestBody String public_token) throws IOException {
 
-            ItemPublicTokenCreateRequest request = new ItemPublicTokenCreateRequest()
+            ItemPublicTokenExchangeRequest request = new ItemPublicTokenExchangeRequest()
 
-                    .accessToken(linkToken);
+                    .publicToken(public_token);
 
-            Response<ItemPublicTokenCreateResponse> response = plaidClient
-                    .itemCreatePublicToken(request)
+            Response<ItemPublicTokenExchangeResponse> response = plaidClient
+                    .itemPublicTokenExchange(request)
                     .execute();
             System.out.println(response);
 
-            return response.body();
+            accessToken
 
     }
 
