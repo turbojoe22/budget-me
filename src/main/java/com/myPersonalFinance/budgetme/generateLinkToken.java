@@ -23,8 +23,27 @@ import java.util.List;
     class GetLinkToken {
 
         private static PlaidApi plaidClient;
+    public static class LinkToken {
+        @JsonProperty
+        private String linkToken;
+
+
+        public LinkToken(String linkToken) {
+            this.linkToken = linkToken;
+        }
+    }
+    public static class AccessToken {
+        @JsonProperty
+        private String accessToken;
+
+
+        public AccessToken(String accessToken) {
+            this.accessToken = accessToken;
+        }
+    }
+
     @GetMapping(path = "generateLinkToken")
-        public String handle() throws IOException {
+        public LinkToken handle() throws IOException {
 
             // Create your Plaid client
 
@@ -56,7 +75,7 @@ import java.util.List;
 
                     .clientName("Budget Me")
 
-                    .products(Arrays.asList(Products.fromValue("auth")))
+                    .products(Arrays.asList(Products.fromValue("assets"), Products.fromValue("transactions")))
 
                     .countryCodes(Arrays.asList(CountryCode.US))
 
@@ -71,10 +90,11 @@ import java.util.List;
 
             // Send the data to the client
         System.out.println(response.body().getLinkToken());
-            return response.body().getLinkToken();
+
+            return new LinkToken(response.body().getLinkToken());
         }
         @PostMapping(path = "createAccessToken", consumes = "application/x-www-form-urlencoded;charset=UTF-8", produces = "application/json")
-        public ItemPublicTokenExchangeResponse createAccessToken(PlaidApi plaidClient, @RequestBody String public_token) throws IOException {
+        public AccessToken createAccessToken(PlaidApi plaidClient, @RequestBody String public_token) throws IOException {
 
             ItemPublicTokenExchangeRequest request = new ItemPublicTokenExchangeRequest()
 
@@ -85,8 +105,8 @@ import java.util.List;
                     .execute();
             System.out.println(response);
 
-            accessToken
 
+           return new AccessToken(response.body().getAccessToken());
     }
 
     @GetMapping(path = "getAnswer")
