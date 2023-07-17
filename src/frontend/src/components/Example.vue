@@ -59,6 +59,7 @@ methods: {
                 headers: {'Content-Type': 'text/plain'},
                 body: public_token
             });
+           await this.getBalance();
            },
          onExit: async (err, metadata) => {
            console.log(
@@ -72,8 +73,16 @@ methods: {
          },
        });
        handler.open();
+
       },
 
+    async getBalance(){
+      const response = await fetch("api/getBalance");
+      const data = await response.json();
+      const balances = data.balances;
+      console.log(balances);
+
+    }
 
     }
   }

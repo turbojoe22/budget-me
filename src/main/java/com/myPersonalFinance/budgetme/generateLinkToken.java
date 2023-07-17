@@ -16,14 +16,12 @@ import java.io.IOException;
 import java.util.*;
 
 
-
-
-
 @RestController
 @RequestMapping("/api/")
     class GetLinkToken {
 
         private static PlaidApi plaidClient;
+        public String accessToken;
     public static class LinkToken {
         @JsonProperty
         private String linkToken;
@@ -42,8 +40,8 @@ import java.util.*;
 
             HashMap<String, String> apiKeys = new HashMap<String, String>();
 
-            apiKeys.put("clientId", "64a72eb489f8b500199bbbd0");
-            apiKeys.put("secret", "48158393baddf3a9bb20423f5e44da");
+            apiKeys.put("clientId", "64a74bf17c8ccb0013c8bf5c");
+            apiKeys.put("secret", "d2c7d5dd31c038447448eed176d954");
             ApiClient apiClient = new ApiClient(apiKeys);
             apiClient.setPlaidAdapter(ApiClient.Sandbox);
 
@@ -85,10 +83,25 @@ import java.util.*;
                     .execute();
 
             System.out.println(response.body());
-
-
+            accessToken = response.body().getAccessToken();
 
     }
+    @GetMapping(path="getBalance")
+    public void getBalance() throws IOException{
+        // Pull real-time balance information for each account associated
+// with the Item
+        System.out.println("Function got called");
+        System.out.println(accessToken);
+        AccountsBalanceGetRequest request = new AccountsBalanceGetRequest()
+                .accessToken(accessToken);
+        Response<AccountsGetResponse> response = plaidClient
+                .accountsBalanceGet(request)
+                .execute();
+        System.out.println(response.body());
+
+    }
+
+
 
     @GetMapping(path = "getAnswer")
     public ResponseEntity<?> getAnswer() {
