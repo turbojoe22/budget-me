@@ -2,12 +2,9 @@ package com.myPersonalFinance.budgetme;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.Gson;
 import com.plaid.client.ApiClient;
-import com.plaid.client.JSON;
 import com.plaid.client.model.*;
 import com.plaid.client.request.PlaidApi;
-import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
@@ -57,7 +54,7 @@ import java.util.*;
             LinkTokenCreateRequest request = new LinkTokenCreateRequest()
                     .user(user)
                     .clientName("Budget Me")
-                    .products(Arrays.asList(Products.fromValue("assets"), Products.fromValue("transactions")))
+                    .products(Arrays.asList(Products.fromValue("com/myPersonalFinance/budgetme/assets"), Products.fromValue("transactions")))
                     .countryCodes(Arrays.asList(CountryCode.US))
                     .language("en");
             Response<LinkTokenCreateResponse> response = plaidClient
