@@ -1,9 +1,15 @@
 <template>
-    <h1>Home Page</h1>
-    <button @click="getAnswer">Go</button>
-    <p>{{ answer }}</p>
-    <h2>Connect To Plaid</h2>
-        <button @click="connectToBank">Link Account</button>
+    <h1>Welcome to Budget Me</h1>
+<!--    <button @click="getAnswer">Go</button>-->
+<!--    <p>{{ answer }}</p>-->
+    <h2>Choose an account to Link
+      <button @click="connectToBank">Link Account</button>
+    </h2>
+    <h2>
+      Learn how to manage your money and become debt-free, while saving for your
+      financial goals.
+      <button >Start my budget:</button>
+    </h2>
         <div>{{}}</div>
 </template>
 
