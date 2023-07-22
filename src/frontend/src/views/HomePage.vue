@@ -8,7 +8,8 @@
     <h2>
       Learn how to manage your money and become debt-free, while saving for your
       financial goals.
-      <button >Start my budget:</button>
+      <router-link to="/expenses" custom v-slot="{ navigate }"><button @click="navigate" role="link">Start my budget:</button></router-link>
+
     </h2>
         <div>{{}}</div>
 </template>
