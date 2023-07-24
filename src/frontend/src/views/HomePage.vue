@@ -35,13 +35,12 @@ mounted(){
 methods: {
 
 //Test code, just grabs a string
-
-    async getAnswer() {
-      const response = await fetch("/api/getAnswer");
-      const answer = await response.json();
-      this.answer = answer.data;
-      console.log(answer.data);
-    },
+    // async getAnswer() {
+    //   const response = await fetch("/api/getAnswer");
+    //   const answer = await response.json();
+    //   this.answer = answer.data;
+    //   console.log(answer.data);
+    // },
 
 //Gets the link token as a string and returns it
 

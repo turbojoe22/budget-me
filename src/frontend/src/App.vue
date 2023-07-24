@@ -74,9 +74,6 @@
 
 <script>
 import TheNavigation from "@/views/TheNavigation.vue";
-//import Transactions from "@/views/TransactionsList.vue";
-// import Login from "@/views/LoginPage.vue";
-// import Expenses from "@/views/ExpenseList.vue";
 
 
 export default {

@@ -5,6 +5,7 @@
     <input type="text" class="input" />
     <label class="label">Password</label>
     <input type="text" class="input" />
+    <button >Sign In</button>
   </div>
 </template>
 
