@@ -1,6 +1,5 @@
 package com.myPersonalFinance.budgetme.controllers;
 
-import com.myPersonalFinance.budgetme.AuthService;
 import com.myPersonalFinance.budgetme.data.UserRepository;
 import com.myPersonalFinance.budgetme.models.User;
 import com.myPersonalFinance.budgetme.models.dto.LoginFormDTO;

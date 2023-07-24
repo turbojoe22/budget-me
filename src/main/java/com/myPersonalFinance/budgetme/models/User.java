@@ -17,11 +17,25 @@ public class User extends AbstractEntity {
     public User(){
     };
 
+    private String accessToken;
+
+
+    public String getAccessToken() {
+
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+
+        this.accessToken = accessToken;
+    }
+
     public User(String username, String password) {
         this.username = username;
         this.pwHash = encoder.encode(password);
     }
     public String getUsername() {
+
         return username;
     }
 

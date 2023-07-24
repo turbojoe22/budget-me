@@ -1,62 +1,165 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<template>
+    <div id="app">
+      <form @submit.prevent="login">
+        <input v-model="username" placeholder="username">
+        <input v-model="password" placeholder="password" type="password">
+        <input type="submit" value="log in">
+      </form>
+    </div>
+</template>
 
-  <title>Login</title>
-
-  <script>
-        function validateForm() {
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-            let errorContainer = document.getElementById("error-container");
-            let errorMessages = [];
-
-            if (username.trim() === "") {
-                errorMessages.push("Please enter a username");
-                }
-
-            if (password.trim() === "") {
-                errorMessages.push("Please enter a password");
-                }
-
-            if (errorMessages.length > 0) {
-                errorContainer.innerHTML = "";
-                for (let i = 0; i < errorMessages.length; i++) {
-                    let errorMessage = document.createElement("p");
-                    errorMessage.textContent = errorMessages[i];
-                    errorContainer.appendChild(errorMessage);
-                }
-                return false;
-            }
-
-            return true;
+<script>
+  export default {
+    name: "App",
+      data(){
+        return {
+          username: "",
+          password: ""
+        };
+      },
+      methods: {
+        async login() {
+          const { username, password } = this;
+          const res = await fetch()
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username, password })
         }
-    </script>
-</head>
+      };
+      const data = await res.json();
+      console.log(data);
+      }
+    }
+  };
+</script>
 
-<body class="container">
+<!--v-model binds the data to the reactive properties we initialized in the data method.-->
 
-<div class="container body-content">
-  <h1>Welcome to Budget-Me!</h1>
-</div>
+<!--The input with type submit will trigger the submit event.-->
 
-<form method="post" action="/user/login" onsubmit="return validateForm()">
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input class="form-control" name="username" id="username" />
-  </div>
+<!--We listen to the submit event with submit.prevent to call preventDefault automatically.-->
 
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input class="form-control" name="password" id="password" type="password" />
-  </div>
+<!--This way, we can submit our login credentials with JavaScript.-->
 
-  <div id="error-container"></div>
+<!--Then in the login method, we called fetch to make a request to the login route we created.-->
 
-  <input type="submit" class="btn btn-primary" value="Log In" />
-</form>
+<!--The method property has the request method.-->
 
-<p>Don't have an account? <a href="/register.html">Register for one!</a></p>
-</body>
-</html>
+<!--headers has the request headers. We need to set Content-Type to application/json so that we can submit JSON.-->
+
+<!--The body has the requests body.-->
+
+<!--Then we get back the response with res.json() -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <link rel="icon" href="data:;base64,iVBORw0KGgo=">-->
+
+<!--  <title>Login</title>-->
+
+<!--  <script>-->
+<!--        function validateForm() {-->
+<!--            let username = document.getElementById("username").value;-->
+<!--            let password = document.getElementById("password").value;-->
+<!--            let errorContainer = document.getElementById("error-container");-->
+<!--            let errorMessages = [];-->
+
+<!--            if (username.trim() === "") {-->
+<!--                errorMessages.push("Please enter a username");-->
+<!--                }-->
+
+<!--            if (password.trim() === "") {-->
+<!--                errorMessages.push("Please enter a password");-->
+<!--                }-->
+
+<!--            if (errorMessages.length > 0) {-->
+<!--                errorContainer.innerHTML = "";-->
+<!--                for (let i = 0; i < errorMessages.length; i++) {-->
+<!--                    let errorMessage = document.createElement("p");-->
+<!--                    errorMessage.textContent = errorMessages[i];-->
+<!--                    errorContainer.appendChild(errorMessage);-->
+<!--                }-->
+<!--                return false;-->
+<!--            }-->
+
+<!--            return true;-->
+<!--        }-->
+<!--    </script>-->
+<!--</head>-->
+
+<!--<body class="container">-->
+
+<!--<div class="container body-content">-->
+<!--  <h1>Welcome to Budget-Me!</h1>-->
+<!--</div>-->
+
+<!--<form method="post" action="/user/login" onsubmit="return validateForm()">-->
+<!--  <div class="form-group">-->
+<!--    <label for="username">Username</label>-->
+<!--    <input class="form-control" name="username" id="username" />-->
+<!--  </div>-->
+
+<!--  <div class="form-group">-->
+<!--    <label for="password">Password</label>-->
+<!--    <input class="form-control" name="password" id="password" type="password" />-->
+<!--  </div>-->
+
+<!--  <div id="error-container"></div>-->
+
+<!--  <input type="submit" class="btn btn-primary" value="Log In" />-->
+<!--</form>-->
+
+<!--<p>Don't have an account? <a href="/register.html">Register for one!</a></p>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<template>-->
+
+<!--  <div>-->
+<!--    <h1>Login Page</h1>-->
+<!--    <button>Login</button>-->
+<!--  </div>-->
+
+<!--</template>-->
+
+
+
+<!--<script>-->
+
+<!--import LoginValidation from './components/loginValidation.js-->
+
+<!--  <h1>Log In</h1>-->
+
+<!--  <input type="text" id="username" v-model="text" />-->
+<!--  <label for="username">Username</label>-->
+
+<!--  <input type="text" id"password" v-model="text" />-->
+<!--  <label for="password">Password</label>-->
+
+<!--  <button>Log In</button>-->
+
+<!--  <p>Don't have an account? <a href="/register.html">Register for one!</a></p>-->
+
+<!--</script>-->
