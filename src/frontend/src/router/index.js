@@ -19,7 +19,7 @@ const routes = [
             path: "/register",
             name: "RegisterPage",
             component: RegisterPage,
-//            RegisterValidation,
+            LoginValidation,
         },
 
     {

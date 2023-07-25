@@ -15,7 +15,7 @@
             </div>
 
 
-                <button @click="formValidation" class="btn btn-dark btn-lg btn-block">Sign In</button>
+                <button @click="validateForm" class="btn btn-dark btn-lg btn-block">Sign In</button>
 
             <p class="register text-right mt-2 mb-4">
                 <router-link to="/register">Don't have an account? Register Here!</router-link>
@@ -26,7 +26,14 @@
 </template>
 
 <script>
+
     export default {
+
+        name: 'LoginPage',
+        components: {
+
+        },
+
         data() {
             return {
                 registerStatus: "",
@@ -38,7 +45,7 @@
         };
     },
         methods: {
-            async formValidation() {
+            async validateForm() {
                 const userLogin = {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},

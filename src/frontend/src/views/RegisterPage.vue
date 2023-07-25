@@ -22,7 +22,7 @@
 
                 <div id="error-container"></div>
 
-            <button @click="formValidation" class="btn btn-dark btn-lg btn-block">Sign Up</button>
+            <button @click="validateForm" class="btn btn-dark btn-lg btn-block">Sign Up</button>
 
         </form>
     </div>
@@ -41,7 +41,7 @@
                };
            },
                methods: {
-                   async formValidation() {
+                   async validateForm() {
                        const userLogin = {
                        method: "POST",
                        headers: {"Content-Type": "application/json"},
