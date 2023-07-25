@@ -1,12 +1,20 @@
 package com.myPersonalFinance.budgetme.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 
 @Entity
-public class User extends AbstractEntity {
+public class User {
+
+    @Id //primary key
+    @GeneratedValue //generate values for primary key
+    private int id;
+
 
     private String username;
     private String pwHash;
@@ -48,4 +56,10 @@ public class User extends AbstractEntity {
 
         return encoder.matches(password, pwHash);
     }
+
+    public int getId() {
+
+        return id;
+    }
+
 }

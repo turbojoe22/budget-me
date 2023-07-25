@@ -5,16 +5,17 @@
             <h3>Log In</h3>
 
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control form-control-lg" placeholder="username"/>
+                <label>Username</label>
+                <input v-model="user.username" class="form-control form-control-lg" placeholder="username"/>
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control form-control-lg" placeholder="password"/>
+                <label>Password</label>
+                <input v-model="user.password" class="form-control form-control-lg" placeholder="password"/>
             </div>
 
-            <button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
+
+                <button @click="formValidation" class="btn btn-dark btn-lg btn-block">Sign In</button>
 
             <p class="register text-right mt-2 mb-4">
                 <router-link to="/register">Don't have an account? Register Here!</router-link>
@@ -27,7 +28,29 @@
 <script>
     export default {
         data() {
-            return {}
+            return {
+                registerStatus: "",
+            user: {
+                username: "",
+                password: "",
+
+            },
+        };
+    },
+        methods: {
+            async formValidation() {
+                const userLogin = {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(this.user),
+
+                };
+                console.log(userLogin)
+                const response = await fetch("/user/login", userLogin);
+               console.log(response);
+
+
+            }
         }
     }
 </script>

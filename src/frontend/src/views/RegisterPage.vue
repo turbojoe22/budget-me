@@ -22,16 +22,38 @@
 
                 <div id="error-container"></div>
 
-            <button type="submit" class="btn btn-dark btn-lg btn-block">Sign Up</button>
+            <button @click="formValidation" class="btn btn-dark btn-lg btn-block">Sign Up</button>
 
         </form>
     </div>
 </template>
 
 <script>
-        export default {
-            data() {
-                return {}
-            }
-        }
-</script>
+       export default {
+               data() {
+                   return {
+                       registerStatus: "",
+                   user: {
+                       username: "",
+                       password: "",
+
+                   },
+               };
+           },
+               methods: {
+                   async formValidation() {
+                       const userLogin = {
+                       method: "POST",
+                       headers: {"Content-Type": "application/json"},
+                       body: JSON.stringify(this.user),
+
+                       };
+                       console.log(userLogin)
+                       const response = await fetch("/user/login", userLogin);
+                      console.log(response);
+
+
+                   }
+               }
+           }
+       </script>
