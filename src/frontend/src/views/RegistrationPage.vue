@@ -1,6 +1,7 @@
 
 <template>
-  <div>
+  <br>
+  <div id="page">
     <h1>Registration Page</h1>
     <label class="label">Username</label>
     <input type="text" class="input" />

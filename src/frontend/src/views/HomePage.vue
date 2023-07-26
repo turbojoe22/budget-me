@@ -1,18 +1,26 @@
 <template>
+  <br>
+  <div id="page">
     <h1>Welcome to Budget Me</h1>
 <!--    <button @click="getAnswer">Go</button>-->
 <!--    <p>{{ answer }}</p>-->
     <h2>Choose an account to Link
       <button @click="connectToBank">Link Account</button>
     </h2>
+  <br>
+  <br>
     <h2>
-      Learn how to manage your money and become debt-free, while saving for your
+      Learn how to manage your money and become <br>debt-free, while saving for your
       financial goals.
-      <router-link to="/expenses" custom v-slot="{ navigate }"><button @click="navigate" role="link">Start my budget:</button></router-link>
+      <router-link to="/expenses" custom v-slot="{ navigate }"><button @click="navigate" role="link">Start my budget</button></router-link>
 
     </h2>
         <div>{{}}</div>
+  </div>
 </template>
+<style>
+
+</style>
 
 <script>
 export default {

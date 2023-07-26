@@ -1,10 +1,66 @@
-<template>
+<template >
   <TheNavigation/>
   <router-view></router-view>
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+  <div class="page"></div>
+
 </template>
 
 
 <style>
+#page {
+  background-color: rgba(245, 245, 245, 0.75);
+  border-radius: .25em;
+}
+html {
+  height:100%;
+}
+
+body {
+  margin:0;
+}
+
+.bg {
+  animation:slide 3s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, rgba(102, 204, 51, 0.5) 50%, rgba(0, 153, 255, 0.5) 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
+}
+
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:4s;
+}
+
+.bg3 {
+  animation-duration:5s;
+}
+
+
+
+h1 {
+  font-family:monospace;
+}
+
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
+}
+
+html {
+  background-color: rgba(0, 153, 255, 0.25);
+}
   body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -21,14 +77,8 @@
   li {
     float: left;
     margin-bottom: 5px;
-  }
 
-  li a {
-    display: block;
-    padding: 8px;
-    background-color: whitesmoke;
   }
-
 
   div {
     max-width: 800px;
@@ -67,6 +117,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 16px;
   }
 
 </style>

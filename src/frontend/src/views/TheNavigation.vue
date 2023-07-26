@@ -1,31 +1,43 @@
 <template>
-  <div>
+  <div id = "nav">
     <ul>
+
       <li>
-        <router-link to="/">Home</router-link>
+        <router-link  to="/" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
+          Home</router-link>
       </li>
       <li>
-        <router-link to="/login"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/loginimage.png" height="32" width="32"/>
-          Login</router-link>
-      </li>
-      <li>
-        <router-link to="/register"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/newUser.png" height="32" width="32"/>
+        <router-link to="/register"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/newUser.png" height="48" width="48"/>
           Register</router-link>
       </li>
-
+      <li>
+        <router-link to="/login"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/loginimage.png" height="48" width="48"/>
+          Login</router-link>
+      </li>
 
       <li>
-        <img  style= "position: absolute;
-              right: 50px;" src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="64" width="64"/>
+        <router-link to="/"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/leave.png" height="48" width="48"/>
+          Logout</router-link>
       </li>
+
     </ul>
-
-
 
   </div>
 </template>
 
 <style >
+  #nav {
+    background-color: rgba(102, 204, 51, 0.5);
+    font-size: large;
+    border-radius:.25em;
+
+  }
+  #nav .active-link {
+    color: black;
+  }
+  a {
+    text-decoration: none;
+  }
 
 </style>
 

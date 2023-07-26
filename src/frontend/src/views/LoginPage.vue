@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <br>
+  <div id="page">
     <h1>Login Page</h1>
     <label class="label">Username</label>
     <input type="text" class="input" />
