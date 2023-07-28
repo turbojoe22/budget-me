@@ -3,7 +3,7 @@ import LoginPage from "@/views/LoginPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue"
 import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
-import LoginValidation from "@/components/LoginValidation.js"
+import LoginValidation from "@/components/LoginValidation.vue"
 
 
 
@@ -19,7 +19,6 @@ const routes = [
             path: "/register",
             name: "RegisterPage",
             component: RegisterPage,
-            LoginValidation,
         },
 
     {

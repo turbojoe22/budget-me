@@ -10,6 +10,6 @@ import javax.transaction.Transactional;
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
 
-    @Transactional
-    User findByUsername(String username);
+//    @Transactional
+//    User findByUsername(String username);
 };

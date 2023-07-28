@@ -11,25 +11,26 @@
 
 <script>
 export default {
+ name: 'LoginValidation',
   data() {
-        name: 'LoginValidation',
+
     return {
       username: "",
-      password: "",
-      errorMessage: "",
+      pwHash: "",
+
     };
   },
   methods: {
     validateForm() {
       this.errorMessage = "";
 
-      if (this.username === "" || this.username === "") {
+      if (this.username === "" || this.password === "") {
         console.log("Please enter a username and/or password");
 
-      },
+      }
 
-    },
-  },
+    }
+  }
 };
 </script>
 

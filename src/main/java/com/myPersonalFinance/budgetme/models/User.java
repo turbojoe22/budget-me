@@ -1,5 +1,6 @@
 package com.myPersonalFinance.budgetme.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,12 +16,13 @@ public class User {
     @GeneratedValue //generate values for primary key
     private int id;
 
-
+    @Column
     private String username;
-    private String pwHash;
+    @Column
+    private String password;
 
 
-    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User(){
     };
@@ -40,7 +42,7 @@ public class User {
 
     public User(String username, String password) {
         this.username = username;
-        this.pwHash = encoder.encode(password);
+        this.password = password;
     }
     public String getUsername() {
 
@@ -51,11 +53,14 @@ public class User {
         this.username = username;
     }
 
-
-    public boolean isMatchingPassword(String password) {
-
-        return encoder.matches(password, pwHash);
+    public void setPassword(String password) { //why do we need a setter for password?
+        this.password = password;
     }
+
+    //    public boolean isMatchingPassword(String password) {
+//
+//        return encoder.matches(password, pwHash);
+//    }
 
     public int getId() {
 

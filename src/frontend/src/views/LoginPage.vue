@@ -53,7 +53,7 @@
 
                 };
                 console.log(userLogin)
-                const response = await fetch("/user/login", userLogin);
+                const response = await fetch("/auth/login", userLogin);
                console.log(response);
 
 
