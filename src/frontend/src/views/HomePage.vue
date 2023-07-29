@@ -53,7 +53,7 @@ methods: {
 //Gets the link token as a string and returns it
 
       async getLinkToken() {
-         const linkTokenResponse =  await fetch("api/generateLinkToken");
+         const linkTokenResponse =  await fetch("api/link/generateLinkToken");
          const data = await linkTokenResponse.json();
          const linkToken = data.linkToken;
          console.log(linkToken);
@@ -68,7 +68,7 @@ methods: {
 
          onSuccess: async (public_token, metadata) => {
          console.log(public_token, metadata);
-            await fetch ("api/createAccessToken", {
+            await fetch ("api/link/createAccessToken", {
                 method: 'POST',
                 headers: {'Content-Type': 'text/plain'},
                 body: public_token

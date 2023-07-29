@@ -3,7 +3,6 @@ import LoginPage from "@/views/LoginPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue"
 import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
-import Registration from "@/views/RegistrationPage.vue";
 import HomePage from "@/views/HomePage.vue";
 
 const routes = [
@@ -33,11 +32,7 @@ const routes = [
         name: "ExpenseList",
         component: ExpenseList,
     },
-    {
-        path: "/register",
-        name: "Registration",
-        component: Registration,
-    }
+
 
 
 ];
