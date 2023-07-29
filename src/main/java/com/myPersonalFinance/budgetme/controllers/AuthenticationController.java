@@ -89,12 +89,7 @@ public class AuthenticationController {
 //        return "register";
 //    }
     @PostMapping(path="/register", consumes="application/json")
-    public void processRegistrationForm( @RequestBody User newUser
-
-//            @ModelAttribute @Valid RegisterFormDTO registerFormDTO,
-//                                          Errors errors, HttpServletRequest request,
-//                                          Model model
-    ) {
+    public void processRegistrationForm( @RequestBody User newUser) {
 
 
 //        User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
@@ -109,7 +104,7 @@ public class AuthenticationController {
 //            errors.rejectValue("password", "passwords.mismatch", "Passwords do not match");
 //            model.addAttribute("title", "Register");
 //            return "user/register";
-            //errors.rejectValue takes 3 parameters:
+//            errors.rejectValue takes 3 parameters:
             //1. the field containing the error
             //2. a label representing the error. This allows error messages to be imported from another file. Even if we don't have such a file, this parameter is required.
             //3. A default message to use if no external error message file is available

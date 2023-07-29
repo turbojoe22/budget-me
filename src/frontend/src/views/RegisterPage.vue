@@ -2,7 +2,7 @@
     <div class="vue-template">
 
         <form @submit.prevent="validateForm">
-            <h3>Sign Up</h3>
+            <h1>Sign Up</h1>
 
             <div class="form-group">
                 <label for="username">Username</label>

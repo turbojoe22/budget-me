@@ -1,8 +1,8 @@
 <template>
     <div class="vue-template">
 
-        <form>
-            <h3>Log In</h3>
+        <form @submit.prevent="validateForm">
+            <h1>Log In</h1>
 
             <div class="form-group">
                 <label>Username</label>
@@ -38,6 +38,7 @@
             return {
                 registrationStatus: "",
                 errorUsername: "",
+                errorPassword: "",
             user: {
                 username: "",
                 password: "",
