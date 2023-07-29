@@ -14,7 +14,7 @@ import java.util.*;
 
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/link/")
     class GetLinkToken {
 
         private static PlaidApi plaidClient;
@@ -37,6 +37,7 @@ import java.util.*;
 
             HashMap<String, String> apiKeys = new HashMap<String, String>();
 
+
             apiKeys.put("clientId", "64a74bf17c8ccb0013c8bf5c");
             apiKeys.put("secret", "d2c7d5dd31c038447448eed176d954");
             ApiClient apiClient = new ApiClient(apiKeys);
@@ -54,7 +55,7 @@ import java.util.*;
             LinkTokenCreateRequest request = new LinkTokenCreateRequest()
                     .user(user)
                     .clientName("Budget Me")
-                    .products(Arrays.asList(Products.fromValue("com/myPersonalFinance/budgetme/assets"), Products.fromValue("transactions")))
+                    .products(Arrays.asList(Products.fromValue("assets"), Products.fromValue("transactions")))
                     .countryCodes(Arrays.asList(CountryCode.US))
                     .language("en");
             Response<LinkTokenCreateResponse> response = plaidClient
@@ -97,8 +98,6 @@ import java.util.*;
         System.out.println(response.body());
 
     }
-
-
 
     @GetMapping(path = "getAnswer")
     public ResponseEntity<?> getAnswer() {
