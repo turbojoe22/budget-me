@@ -1,12 +1,30 @@
 <template>
 
-  <Home-Page/>
+ <div class="vue-template">
+     <!-- Navigation -->
+     <nav class="navbar shadow bg-white rounded justify-content-between flex-nowrap flex-row fixed-top">
+       <div class="container">
 
-  <hello-world></hello-world>
-  <router-link to="/login">Login</router-link>
-  <router-link to="/transactions">Transaction List</router-link>
-  <router-link to="/expenses">Expenses</router-link>
-  <router-view/>
+         <ul class="nav navbar-nav flex-row float-right">
+           <li class="nav-item">
+             <router-link class="nav-link pr-3" to="/login">Log In</router-link>
+           </li>
+           <li class="nav-item">
+             <router-link class="btn btn-outline-primary" to="/register">Register</router-link>
+           </li>
+         </ul>
+       </div>
+     </nav>
+
+     <!-- Main -->
+     <div class="App">
+       <div class="vertical-center">
+         <div class="inner-block">
+           <router-view />
+         </div>
+       </div>
+     </div>
+   </div>
 
 </template>
 
@@ -18,31 +36,21 @@
 
 <script>
 
-import HomePage from './components/Example.vue'
-import HelloWorld from './components/Example.vue'
+
 // import Transactions from "@/views/TransactionsList.vue";
 // import Login from "@/views/LoginPage.vue";
 // import Expenses from "@/views/ExpenseList.vue";
 
-import Vue from 'vue'
-import App from './App.vue'
-import 'bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
 
-Vue.config.productionTip = false
+//import 'bootstrap'
+//import 'bootstrap/dist/css/bootstrap.min.css'
 
-new Vue({
-  render: h => h(App),
-}).$mount('#app')
+
 
 
 export default {
   name: 'App',
   components: {
-
-    HomePage,
-    HelloWorld,
-
 
   }
 }
