@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### distro files ###
-/node_modules
+/node_modules/
