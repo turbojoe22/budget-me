@@ -7,16 +7,23 @@
             <div class="form-group">
                 <label for="username">Username</label>
                 <input v-model="user.username" placeholder="username"/>
+                <p>{{ errorUsername }}</p>
             </div>
 
 
             <div class="form-group">
                 <label for="password">Password</label>
                 <input v-model="user.password" placeholder="password"/>
+                <p>{{ errorPassword }}</p>
+            </div>
+
+            <div class="form-group">
+                <label for="verifyPassword">Verify Password</label>
+                <input v-model="user.verifyPassword" placeholder="verify password" />
+                <p>{{ errorVerifyPassword }}</p>
             </div>
 
 
-                <div id="error-container"></div>
 
             <button>Sign Up</button>
 
@@ -29,29 +36,42 @@
                name: "RegisterPage",
                data() {
                    return {
-                       registerStatus: "",
-                       errorMessage: "",
+                       registrationStatus: "",
+                       errorUsername: "",
+                       errorPassword: "",
+                       errorVerifyPassword: "",
                    user: {
                        username: null,
                        password: null,
+                       verifyPassword: null,
 
                    },
                };
            },
                methods: {
                    async validateForm() {
+                       if (this.user.username === null || this.user.username === '') {
+                          this.errorUsername = "Please enter username";
+
+                          }  if (this.user.password === null || this.user.password === '') {
+                                this.errorPassword = "Please enter password";
+                                return;
+                              } else if (this.user.password !== this.user.verifyPassword) {
+                                this.errorVerifyPassword = "Passwords do not match";
+                                return;
+                       }  else {
                        const userLogin = {
                        method: "POST",
                        headers: {"Content-Type": "application/json"},
                        body: JSON.stringify(this.user),
 
                        };
-                    console.log(userLogin);
-                       const response = await fetch("/api/auth/register", userLogin);
+
+                      const response = await fetch("/api/auth/register", userLogin);
                       console.log(response);
 
-
                    }
-               }
-           }
+              }
+           },
+}
        </script>

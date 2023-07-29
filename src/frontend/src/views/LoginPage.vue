@@ -36,7 +36,8 @@
 
         data() {
             return {
-                registerStatus: "",
+                registrationStatus: "",
+                errorUsername: "",
             user: {
                 username: "",
                 password: "",
