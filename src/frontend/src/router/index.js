@@ -3,7 +3,8 @@ import LoginPage from "@/views/LoginPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue"
 import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
-import LoginValidation from "@/components/LoginValidation.vue"
+import HomePage from "@/views/HomePage.vue";
+
 
 
 
@@ -13,14 +14,18 @@ const routes = [
         path: "/login",
         name: "LoginPage",
         component: LoginPage,
-        LoginValidation,
+
     },
     {
-            path: "/register",
-            name: "RegisterPage",
-            component: RegisterPage,
-        },
-
+        path: "/register",
+        name: "RegisterPage",
+        component: RegisterPage,
+    },
+    {
+         path: "/home",
+         name: "HomePage",
+         component: HomePage,
+    },
     {
         path: "/transactions",
         name: "TransactionsList",
@@ -30,7 +35,7 @@ const routes = [
         path: "/expenses",
         name: "ExpenseList",
         component: ExpenseList,
-    }
+    },
 
 
 ];

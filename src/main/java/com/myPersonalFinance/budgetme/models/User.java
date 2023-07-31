@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.myPersonalFinance.budgetme.data.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.List;
 
 
 @Entity
@@ -21,14 +24,11 @@ public class User {
     @Column
     private String password;
 
-
+    private String accessToken;
 //    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User(){
     };
-
-    private String accessToken;
-
 
     public String getAccessToken() {
 
@@ -43,6 +43,7 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+
     }
     public String getUsername() {
 
