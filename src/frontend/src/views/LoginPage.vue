@@ -8,24 +8,19 @@
   <div class="page"></div>
   <div class="vue-template">
 
-        <form @submit.prevent="validateForm">
+        <form @submit.prevent="loginUser">
             <h1>Login</h1>
-
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input v-model="user.username" placeholder="username" />
-                <p v-if="errors.username">{{ errors.username }}</p>
-
+            <div>
+              <label for="username">Username</label>
+              <input v-model="username" type="text" placeholder="Username" required />
             </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input v-model="user.password" type="password" placeholder="password"/>
-                <p v-if="errors.password">{{ errors.password }}</p>
+            <div>
+              <label for="password">Password</label>
+              <input v-model="password" type="password" placeholder="Password" required />
             </div>
+            <button type="submit">Login</button>
 
-
-                <button type="submit">Sign In</button>
+            <p v-if="errorMessage">{{ errorMessage }}</p>
 
             <p>
                 <router-link to="/register">Don't have an account? Register Here!</router-link>
@@ -149,52 +144,52 @@ html {
 
 </style>
 
-
 <script>
 
-    export default {
+export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+      errorMessage: "",
+    };
+  },
+  methods: {
+    async loginUser() {
+      const user = {
+        username: this.username,
+        password: this.password,
+      };
 
-        name: "LoginPage",
-        data() {
-            return {
-
-                registrationStatus: "",
-
-                    errors: {
-                        username: "",
-                        password: "",
-                        },
-            user: {
-                username: "",
-                password: "",
-
-            },
-        };
-    },
-        methods: {
-
-            async validateForm() {
-                if (this.user.username === null || this.user.username === '') {
-                   this.errors.username = "Please enter username";
-                        return;
-                    }  if (this.user.password === null || this.user.password === '') {
-                          this.errors.password = "Please enter password";
-                        return;
-
-                    } else {
-
-                const userLogin = {
+      try {
+              const response = await fetch("/api/auth/login", {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(this.user),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(user),
+              });
 
-                };
 
-               const response = await fetch("/api/auth/login", userLogin);
-               console.log(response);
-               this.$router.push('/home');
+              if (response.ok) {
+
+                    this.$router.push('/home');
+
+
+                } else if (!response.ok) {
+
+                  this.errorMessage = "Invalid credentials. Please try again or register.";
+                }
+               else {
+
+                this.errorMessage = "Login failed. Please try again later.";
+
+              }
+            } catch (error) {
+
+              console.error("Error during login", error);
+
+              this.errorMessage = "Username not found. Please register for an account!";
             }
-        }
     },
-}
+  },
+};
 </script>

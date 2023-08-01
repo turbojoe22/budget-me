@@ -1,5 +1,6 @@
 <template>
 
+
  <div class="vue-template">
      <!-- Navigation -->
        <div class="container">
@@ -7,12 +8,15 @@
            <div class="nav-item">
              <router-link to="/register">Register</router-link></div>
 
+
        </div>
 
 
      <!-- Main -->
      <div class="App">
+
        <div class="vertical-center">
+
          <div class="inner-block">
            <router-view />
          </div>
@@ -26,7 +30,6 @@
 <style>
 
 </style>
-
 
 <script>
 
