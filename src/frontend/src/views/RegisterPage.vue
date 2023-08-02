@@ -1,77 +1,72 @@
 <template>
-    <div class="vue-template">
 
-        <form @submit.prevent="validateForm">
-            <h3>Sign Up</h3>
+  <router-view></router-view>
+  <div class="bg"></div>
+  <div class="bg bg2"></div>
+  <div class="bg bg3"></div>
+ <div class="page"></div>
 
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input v-model="user.username" placeholder="username"/>
-                <p>{{ errorUsername }}</p>
-            </div>
+      <form @submit.prevent="registerUser">
+        <h1>Sign Up</h1>
+        <div>
+          <label for="username">Username</label>
+          <input v-model="username" type="text" placeholder="Username" required />
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input v-model="password" type="password" placeholder="Password" required />
+        </div>
+        <div>
+          <label for="verifyPassword">Verify Password</label>
+          <input v-model="verifyPassword" type="password" placeholder="Verify Password" required />
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+    </template>
 
+    <script>
+    export default {
+      data() {
+        return {
+          username: "",
+          password: "",
+          verifyPassword: "",
+        };
+      },
+      methods: {
+        async registerUser() {
+          if (this.password !== this.verifyPassword) {
+            alert("Passwords do not match");
+            return;
+          }
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input v-model="user.password" placeholder="password"/>
-                <p>{{ errorPassword }}</p>
-            </div>
+          const user = {
+            username: this.username,
+            password: this.password,
+          };
 
-            <div class="form-group">
-                <label for="verifyPassword">Verify Password</label>
-                <input v-model="user.verifyPassword" placeholder="verify password" />
-                <p>{{ errorVerifyPassword }}</p>
-            </div>
+          try {
+            const response = await fetch("/api/auth/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(user),
+            });
 
+            if (response.ok) {
+              this.$router.push('/home');
 
+            } else if (response.status === 409) {
+              alert("Username already exists. Please login!");
 
-            <button>Sign Up</button>
+            } else {
+              alert("Registration failed");
 
-        </form>
-    </div>
-</template>
+            }
+          } catch (error) {
+            console.error("Error during registration", error);
 
-<script>
-       export default {
-               name: "RegisterPage",
-               data() {
-                   return {
-                       registrationStatus: "",
-                       errorUsername: "",
-                       errorPassword: "",
-                       errorVerifyPassword: "",
-                   user: {
-                       username: null,
-                       password: null,
-                       verifyPassword: null,
-
-                   },
-               };
-           },
-               methods: {
-                   async validateForm() {
-                       if (this.user.username === null || this.user.username === '') {
-                          this.errorUsername = "Please enter username";
-
-                          }  if (this.user.password === null || this.user.password === '') {
-                                this.errorPassword = "Please enter password";
-                                return;
-                              } else if (this.user.password !== this.user.verifyPassword) {
-                                this.errorVerifyPassword = "Passwords do not match";
-                                return;
-                       }  else {
-                       const userLogin = {
-                       method: "POST",
-                       headers: {"Content-Type": "application/json"},
-                       body: JSON.stringify(this.user),
-
-                       };
-
-                      const response = await fetch("/api/auth/register", userLogin);
-                      console.log(response);
-
-                   }
-              }
-           },
-}
-       </script>
+          }
+        },
+      },
+    };
+    </script>

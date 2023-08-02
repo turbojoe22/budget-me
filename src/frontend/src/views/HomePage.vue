@@ -1,4 +1,4 @@
-<template>
+
   <br>
   <div id="page">
     <h1>Welcome to Budget Me</h1>
@@ -97,9 +97,35 @@ methods: {
       console.log(balances);
 
     }
+    const timeoutInMS = 180000; // 3 minutes -> 3 * 60 * 1000
+let timeoutId;
+
+function handleInactive() {
+    // Here you want to logout a user and/or ping your token
+}
+
+function startTimer() {
+    // setTimeout returns an ID (can be used to start or clear a timer)
+    timeoutId = setTimeout(handleInactive, timeoutInMS);
+}
+
+function resetTimer() {
+    clearTimeout(timeoutId);
+    startTimer();
+}
+
+function setupTimers () {
+    document.addEventListener("keypress", resetTimer, false);
+    document.addEventListener("mousemove", resetTimer, false);
+    document.addEventListener("mousedown", resetTimer, false);
+    document.addEventListener("touchmove", resetTimer, false);
+
+    startTimer();
+}
 
     }
   }
 
 </script>
+
 

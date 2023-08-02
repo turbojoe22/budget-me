@@ -5,6 +5,7 @@ import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
 import HomePage from "@/views/HomePage.vue";
 
+
 const routes = [
     {
         path: "/",
@@ -15,13 +16,18 @@ const routes = [
         path: "/login",
         name: "LoginPage",
         component: LoginPage,
+
     },
     {
-            path: "/register",
-            name: "RegisterPage",
-            component: RegisterPage,
-        },
-
+        path: "/register",
+        name: "RegisterPage",
+        component: RegisterPage,
+    },
+    {
+         path: "/home",
+         name: "HomePage",
+         component: HomePage,
+    },
     {
         path: "/transactions",
         name: "TransactionsList",

@@ -1,3 +1,4 @@
+
 <template >
   <TheNavigation/>
   <router-view></router-view>
@@ -125,12 +126,11 @@ html {
 
 </style>
 
-
 <script>
 
 
 // import Transactions from "@/views/TransactionsList.vue";
-// import Login from "@/views/LoginPage.vue";
+//import Login from "@/views/LoginPage.vue";
 // import Expenses from "@/views/ExpenseList.vue";
 import TheNavigation from "@/views/TheNavigation.vue";
 
@@ -146,6 +146,7 @@ export default {
   components: {
 
    TheNavigation,
+
 
   }
 }

@@ -1,34 +1,26 @@
 package com.myPersonalFinance.budgetme.models;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import javax.persistence.*;
 
 
 @Entity
+@Table(name="user")
 public class User {
 
     @Id //primary key
-    @GeneratedValue //generate values for primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //generate values for primary key
     private int id;
 
-    @Column
+    @Column(nullable=false, unique = true)
     private String username;
     @Column
     private String password;
 
+    private String accessToken;
 
-//    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User(){
     };
-
-    private String accessToken;
-
 
     public String getAccessToken() {
 
@@ -43,6 +35,7 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+
     }
     public String getUsername() {
 
@@ -57,14 +50,13 @@ public class User {
         this.password = password;
     }
 
-    //    public boolean isMatchingPassword(String password) {
-//
-//        return encoder.matches(password, pwHash);
-//    }
 
     public int getId() {
 
         return id;
     }
 
+    public Object getPassword() {
+        return password;
+    }
 }
