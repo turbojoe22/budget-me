@@ -162,35 +162,35 @@ export default {
       };
 
       try {
-              const response = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(user),
-              });
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(user),
+        });
 
 
-              if (response.ok) {
+        if (response.ok) {
 
-                    this.$router.push('/home');
+          this.$router.push('/home');
 
 
-                } else if (!response.ok) {
+        } else if (!response.ok) {
 
-                  this.errorMessage = "Invalid credentials. Please try again or register.";
-                }
-               else {
+          this.errorMessage = "Invalid credentials. Please try again or register.";
+        } else {
 
-                this.errorMessage = "Login failed. Please try again later.";
-
-              }
-            } catch (error) {
-
-              console.error("Error during login", error);
-
-              this.errorMessage = "Username not found. Please register for an account!";
-            }
+          this.errorMessage = "Login failed. Please try again later.";
 
         }
+      } catch (error) {
+
+        console.error("Error during login", error);
+
+        this.errorMessage = "Username not found. Please register for an account!";
+      }
+
     }
+  }
+}
 </script>
 
