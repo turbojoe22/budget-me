@@ -6,10 +6,12 @@ import ExpenseList from "@/views/ExpenseList.vue";
 import HomePage from "@/views/HomePage.vue";
 
 
-
-
-
 const routes = [
+    {
+        path: "/",
+        name: "HomePage",
+        component: HomePage,
+    },
     {
         path: "/login",
         name: "LoginPage",
@@ -38,9 +40,12 @@ const routes = [
     },
 
 
+
 ];
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
+    linkActiveClass: "active-link",
+
 });
 export default router;

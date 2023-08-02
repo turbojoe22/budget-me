@@ -189,7 +189,8 @@ export default {
 
               this.errorMessage = "Username not found. Please register for an account!";
             }
-    },
-  },
-};
+
+        }
+    }
 </script>
+
