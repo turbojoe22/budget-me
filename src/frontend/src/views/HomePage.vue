@@ -53,7 +53,7 @@ methods: {
 //Gets the link token as a string and returns it
 
       async getLinkToken() {
-         const linkTokenResponse =  await fetch("api/link/generateLinkToken");
+         const linkTokenResponse =  await fetch("api/plaid/generateLinkToken");
          const data = await linkTokenResponse.json();
          const linkToken = data.linkToken;
          console.log(linkToken);
@@ -66,10 +66,11 @@ methods: {
       const handler = window.Plaid.create({
          token : await this.getLinkToken(),
 
-         onSuccess: async (public_token, metadata) => {
-         console.log(public_token, metadata);
-            await fetch ("api/link/createAccessToken", {
+         onSuccess: async (public_token) => {
+
+            await fetch ("api/plaid/createAccessToken", {
                 method: 'POST',
+                credentials: 'include',
                 headers: {'Content-Type': 'text/plain'},
                 body: public_token
             });

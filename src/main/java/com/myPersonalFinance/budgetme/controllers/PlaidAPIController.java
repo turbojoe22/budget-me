@@ -1,10 +1,14 @@
-package com.myPersonalFinance.budgetme;
+package com.myPersonalFinance.budgetme.controllers;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.myPersonalFinance.budgetme.data.UserRepository;
+import com.myPersonalFinance.budgetme.models.User;
 import com.plaid.client.ApiClient;
 import com.plaid.client.model.*;
 import com.plaid.client.request.PlaidApi;
+import okhttp3.Cookie;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
@@ -14,8 +18,10 @@ import java.util.*;
 
 
 @RestController
-@RequestMapping("/api/link/")
-    class GetLinkToken {
+@RequestMapping("/api/plaid/")
+    class PlaidAPIController {
+    @Autowired
+    private UserRepository userRepository;
 
         private static PlaidApi plaidClient;
         public String accessToken;
@@ -70,7 +76,7 @@ import java.util.*;
             return new LinkToken(response.body().getLinkToken());
         }
         @PostMapping(path = "createAccessToken", consumes = "text/plain")
-        public void createAccessToken(@RequestBody String public_token) throws IOException {
+        public ResponseEntity createAccessToken(@RequestBody String public_token, @CookieValue(value = "sessionId") int sessionId) throws IOException {
 
             System.out.println(public_token);
             ItemPublicTokenExchangeRequest request = new ItemPublicTokenExchangeRequest()
@@ -80,9 +86,14 @@ import java.util.*;
                     .itemPublicTokenExchange(request)
                     .execute();
 
+            User user = userRepository.findById(sessionId);
+
+
+
             System.out.println(response.body());
             accessToken = response.body().getAccessToken();
 
+    return ResponseEntity.ok("Access token saved");
     }
     @GetMapping(path="getBalance")
     public void getBalance() throws IOException{
