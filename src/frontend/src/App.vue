@@ -5,9 +5,7 @@
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
-  <div class="page"></div>
-
-
+  <div id="page"></div>
 
 
 </template>
@@ -128,11 +126,9 @@ html {
 </style>
 
 <script>
-
 export default {
   name: 'App',
   components: {
-
 
   }
 }

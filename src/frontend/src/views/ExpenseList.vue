@@ -1,4 +1,5 @@
 <template>
+  <TheNavigation/>
   <br>
   <div id="page">
     <h1>Expenses</h1>
@@ -11,5 +12,14 @@
 <style>
 
 </style>
-<script setup>
+
+<script>
+import TheNavigation from "@/views/TheNavigation.vue";
+
+export default {
+
+  components: {
+    TheNavigation,
+  },
+}
 </script>

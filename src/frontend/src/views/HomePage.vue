@@ -24,9 +24,8 @@
 </style>
 
 <script>
+import TheNavigation from "@/views/TheNavigation.vue";
 export default {
-  // import not working
-  import TheNavigation
   mounted(){
       let Plaid = document.createElement('script')
       Plaid.setAttribute('src', 'https://cdn.plaid.com/link/v2/stable/link-initialize.js')
@@ -37,6 +36,7 @@ export default {
   components: {
     TheNavigation,
   },
+
   data() {
     return {
      answer: "",
@@ -131,8 +131,4 @@ methods: {
          }
       }
 
-
-
 </script>
-
-
