@@ -26,18 +26,6 @@
 </template>
 
 <style >
-#nav {
-  background-color: rgba(102, 204, 51, 0.5);
-  font-size: large;
-  border-radius:.25em;
-
-}
-#nav .active-link {
-  color: black;
-}
-a {
-  text-decoration: none;
-}
 
 </style>
 
