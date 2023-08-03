@@ -1,33 +1,45 @@
 <template>
+  <div id = "nav">
+    <ul>
+
+      <li>
+        <router-link  to="/" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
+          Home</router-link>
+      </li>
+
+    </ul>
+
+  </div>
+  <br>
  <Login />
   <router-view>
   </router-view>
-  <div class="bg"></div>
-  <div class="bg bg2"></div>
-  <div class="bg bg3"></div>
-  <div class="page"></div>
-  <div class="vue-template">
 
-        <form @submit.prevent="loginUser">
-            <h1>Login</h1>
-            <div>
-              <label for="username">Username</label>
-              <input v-model="username" type="text" placeholder="Username" required />
-            </div>
-            <div>
-              <label for="password">Password</label>
-              <input v-model="password" type="password" placeholder="Password" required />
-            </div>
-            <button type="submit">Login</button>
+  <div id="page">
+    <form @submit.prevent="loginUser">
+      <h1>Login</h1>
+      <div>
+        <label for="username">Username</label>
+        <input v-model="username" type="text" placeholder="Username" required />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input v-model="password" type="password" placeholder="Password" required />
+      </div>
+      <button type="submit">Login</button>
 
-            <p v-if="errorMessage">{{ errorMessage }}</p>
+      <p v-if="errorMessage">{{ errorMessage }}</p>
 
-            <p>
-                <router-link to="/register">Don't have an account? Register Here!</router-link>
-            </p>
+      <p>
+        <router-link to="/register">Don't have an account? Register Here!</router-link>
+      </p>
 
-        </form>
-    </div>
+    </form>
+  </div>
+
+
+
+
 </template>
 
 <style>
@@ -147,6 +159,7 @@ html {
 <script>
 
 export default {
+
   data() {
     return {
       username: "",

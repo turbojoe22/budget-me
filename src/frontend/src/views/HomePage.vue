@@ -1,4 +1,5 @@
 <template>
+  <TheNavigation/>
   <br>
   <div id="page">
     <h1>Welcome to Budget Me</h1>
@@ -24,14 +25,18 @@
 
 <script>
 export default {
-mounted(){
+  // import not working
+  import TheNavigation
+  mounted(){
       let Plaid = document.createElement('script')
       Plaid.setAttribute('src', 'https://cdn.plaid.com/link/v2/stable/link-initialize.js')
       document.head.appendChild(Plaid)
     },
 
-
   name: 'HomePage',
+  components: {
+    TheNavigation,
+  },
   data() {
     return {
      answer: "",
