@@ -29,10 +29,24 @@
         <input type="number" id="amount" v-model="expense.amount" required>
       </div>
       <div class="form-group">
-        <label for="tag">Tag:</label>
-        <input type="text" id="tag" v-model="expense.tag" required>
+        <label for="category">Category:</label>
+        <select id="category" v-model="expense.category" required>
+            <option value="Loan Payments">Loan Payments</option>
+            <option value="Entertainment">Entertainmen</option>
+            <option value="Food and Drink">Food and Drink</option>
+            <option value="General Merchandise">General Merchandise</option>
+            <option value="Home Improvement">Home Improvement</option>
+            <option value="Medical">Medical</option>
+            <option value="Personal Care">Personal Care</option>
+            <option value="General Services">General Services</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Travel">Travel</option>
+            <option value="Rent and Utilities">Rent and Utilities</option>
+        </select>
+
+
       </div>
-      <button type="submit" @click="submitExpense">Submit</button>
+      <button type="submit">Submit</button>
     </form>
   </div>
 
@@ -53,30 +67,48 @@ export default {
         frequency: '',
         expenseName: '',
         amount: null,
-        tag: ''
+        category: ''
       }
     };
   },
   methods: {
     async submitExpense() {
 
-        if (this.expense.expenseName === null || this.expense.expenseAmount === null) {
-            this.addStatus = "Try again: Name or $Amount blank"
-            return;
-        } else {
-            const expenseAddRequest = {
+            const expenseData = {
+                dueDate: this.dueDate,
+                isRepeated: this.isRepeated,
+                frequency: this.frequency,
+                expenseName: this.expenseName,
+                amount: this.amount,
+                category: this.category,
+            }
+
+            const createExpenseRequest = {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(this.expense)
-            };
-            console.log(expenseAddRequest)
-            const response = await fetch("/api/expenses/add", expenseAddRequest);
-            console.log(response);
+                body: JSON.stringify(expenseData)
+            }
+
+            console.log(expenseData);
+
+           try {
+                const response = await fetch("/api/expenses/create-expense", createExpenseRequest);
+
+                if (response.ok) {
+                    this.$router.push('/expenses')
+                } else {
+                    alert("Expense creation failed.")
+                }
+            } catch (error) {
+                console.error("Error occurred during expense creation.", error);
+            }
+
+            console.log(this.response);
 
       }
     }
   }
-}
+
 </script>
 
 

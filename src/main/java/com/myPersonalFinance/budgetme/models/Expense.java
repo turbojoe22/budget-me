@@ -2,10 +2,7 @@ package com.myPersonalFinance.budgetme.models;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
@@ -13,7 +10,7 @@ import java.util.Objects;
 @Entity
 public class Expense {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int expenseId;
     @Column
     @NotBlank(message= "Name is required")
@@ -29,16 +26,16 @@ public class Expense {
     @Column
     String dueDate;
     @Column
-    private String tag;
+    private String category;
 
 
-    public Expense(String expenseName,int amount, String frequency, boolean isRepeated, String dueDate, String tag) {
+    public Expense(String expenseName,int amount, String frequency, boolean isRepeated, String dueDate, String category) {
         this.expenseName = expenseName;
         this.amount = amount;
         this.frequency = frequency;
         this.isRepeated = isRepeated;
         this.dueDate = dueDate;
-        this.tag = tag;
+        this.category = category;
     }
 
     public Expense() {}
@@ -87,12 +84,12 @@ public class Expense {
         this.dueDate = due_date;
     }
 
-    public String getTag() {
-        return tag;
+    public String getCategory() {
+        return category;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Override
@@ -110,8 +107,8 @@ public class Expense {
 
     public String toString() {
 
-        if (this.tag.equals("")){
-            this.tag = "Data not available";
+        if (this.category.equals("")){
+            this.category = "Data not available";
         }
         if (this.frequency.equals("")) {
             this.frequency = "Data not available";
@@ -122,6 +119,6 @@ public class Expense {
                 "Frequency: " + getFrequency() + "\n" +
                 "Current due date: "  + getDueDate() + "\n" +
                 "Repeating: " + getIsRepeated() + "\n" +
-                "Tag: " + getTag() + "\n";
+                "Category: " + getCategory() + "\n";
     }
 }

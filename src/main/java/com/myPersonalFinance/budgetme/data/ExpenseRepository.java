@@ -6,9 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Integer> {
-
-//    int findById(int expenseId);
-
+    Expense findById(int expenseId);
 }
 
 
