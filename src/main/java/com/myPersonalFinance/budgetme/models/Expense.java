@@ -44,7 +44,7 @@ public class Expense {
         return expenseId;
     }
 
-    public String getName() {
+    public String getExpenseName() {
         return expenseName;
     }
 
@@ -114,7 +114,7 @@ public class Expense {
             this.frequency = "Data not available";
         }
         return "\n" + "ID: " + getExpenseId() + "\n" +
-                "Name: " + getName() + "\n" +
+                "Name: " + getExpenseName() + "\n" +
                 "Amount: " + getAmount() + "\n" +
                 "Frequency: " + getFrequency() + "\n" +
                 "Current due date: "  + getDueDate() + "\n" +
