@@ -43,10 +43,8 @@
             <option value="Travel">Travel</option>
             <option value="Rent and Utilities">Rent and Utilities</option>
         </select>
-
-
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit">Create Expense</button>
     </form>
   </div>
 
@@ -58,7 +56,7 @@
 
 <script>
 export default {
-
+  name: "ExpenseList",
   data() {
     return {
       expense: {
@@ -74,22 +72,16 @@ export default {
   methods: {
     async submitExpense() {
 
-            const expenseData = {
-                dueDate: this.dueDate,
-                isRepeated: this.isRepeated,
-                frequency: this.frequency,
-                expenseName: this.expenseName,
-                amount: this.amount,
-                category: this.category,
-            }
+
 
             const createExpenseRequest = {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(expenseData)
+                body: JSON.stringify(this.expense)
             }
+            console.log(this.expense);
+            console.log(JSON.stringify(this.expense));
 
-            console.log(expenseData);
 
            try {
                 const response = await fetch("/api/expenses/create-expense", createExpenseRequest);
