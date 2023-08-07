@@ -2,13 +2,16 @@ package com.myPersonalFinance.budgetme.controllers;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.myPersonalFinance.budgetme.data.AccessTokenRepository;
 import com.myPersonalFinance.budgetme.data.UserRepository;
+import com.myPersonalFinance.budgetme.models.PlaidAccessToken;
 import com.myPersonalFinance.budgetme.models.User;
 import com.plaid.client.ApiClient;
 import com.plaid.client.model.*;
 import com.plaid.client.request.PlaidApi;
 import okhttp3.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
@@ -22,9 +25,11 @@ import java.util.*;
     class PlaidAPIController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private AccessTokenRepository accessTokenRepository;
 
         private static PlaidApi plaidClient;
-        public String accessToken;
+
     public static class LinkToken {
         @JsonProperty
         private String linkToken;
@@ -37,7 +42,7 @@ import java.util.*;
 
 
     @GetMapping(path = "generateLinkToken")
-        public LinkToken handle() throws IOException {
+        public LinkToken handle(@CookieValue(value = "sessionId") int sessionId)  throws IOException {
 
             // Create your Plaid client
 
@@ -54,7 +59,7 @@ import java.util.*;
             // Get the clientUserId by searching for the current user
 
             LinkTokenCreateRequestUser user = new LinkTokenCreateRequestUser()
-                    .clientUserId("1");
+                    .clientUserId(String.valueOf(sessionId));
 
             // Create a link_token for the given user
 
@@ -71,115 +76,51 @@ import java.util.*;
                     .execute();
 
             // Send the data to the client
-        System.out.println(response.body().getLinkToken());
+
 
             return new LinkToken(response.body().getLinkToken());
         }
         @PostMapping(path = "createAccessToken", consumes = "text/plain")
         public ResponseEntity createAccessToken(@RequestBody String public_token, @CookieValue(value = "sessionId") int sessionId) throws IOException {
 
-            System.out.println(public_token);
+            //Creates a request object with the public token to be exchanged
             ItemPublicTokenExchangeRequest request = new ItemPublicTokenExchangeRequest()
                     .publicToken(public_token);
+            //Sends the request to plaid and returns with the access token, an id, and a request id in the response
 
             Response<ItemPublicTokenExchangeResponse> response = plaidClient
                     .itemPublicTokenExchange(request)
                     .execute();
 
-            User user = userRepository.findById(sessionId);
+            //Checks the repository to see if the bank information is already linked
 
+            PlaidAccessToken checkForSavedToken = accessTokenRepository.findByitemId(response.body().getItemId());
 
+            //Returns an error if the bank account has an access token
 
-            System.out.println(response.body());
-            accessToken = response.body().getAccessToken();
+            if(checkForSavedToken != null){
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Bank account already registered!");
 
-    return ResponseEntity.ok("Access token saved");
-    }
-    @GetMapping(path="getBalance")
-    public void getBalance() throws IOException{
-        // Pull real-time balance information for each account associated
-// with the Item
-        System.out.println("Function got called");
-        System.out.println(accessToken);
-        AccountsBalanceGetRequest request = new AccountsBalanceGetRequest()
-                .accessToken(accessToken);
-        Response<AccountsGetResponse> response = plaidClient
-                .accountsBalanceGet(request)
-                .execute();
-        System.out.println(response.body());
+                //Creates an access token object which relates to the current user and the current item associated with
+                //a bank account and saves it to the database
 
-    }
+            } else if (checkForSavedToken == null){
+                User user = userRepository.findById(sessionId);
+                PlaidAccessToken plaidAccessToken =
+                        new PlaidAccessToken(response.body().getAccessToken(), user, response.body().getItemId());
+                accessTokenRepository.save(plaidAccessToken);
+                return ResponseEntity.ok("Access token saved");
 
-    @GetMapping(path = "getAnswer")
-    public ResponseEntity<?> getAnswer() {
-        HashMap<String, String> response = new HashMap<>();
-        response.put("data", "How are you doing?");
-        return ResponseEntity.ok(response);
+                //Don't know when this would be used but figured it should be here
+
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong...");
+            }
 
     }
+
+
+
     }
-
-//public class generateLinkToken {
-//
-//    private final List<String> countryCodes;
-//    final List<Products> correctedPlaidProducts;
-//    private final List<CountryCode> correctedCountryCodes;
-//
-//    public generateLinkToken(List<String> countryCodes) {
-//
-//        this.countryCodes = countryCodes;
-//        this.correctedPlaidProducts = new ArrayList<>();
-//        this.correctedCountryCodes = new ArrayList<>();
-//    }
-//
-//    public static class LinkToken {
-//
-//        @JsonProperty
-//        private String linkToken;
-//
-//
-//        public LinkToken(String linkToken) {
-//            this.linkToken = linkToken;
-//        }
-//    }
-//    @GetMapping(path = "generateLinkToken")
-//    public String getLinkToken() throws IOException {
-//
-//
-//        String clientUserId = Long.toString((new Date()).getTime());
-//        LinkTokenCreateRequestUser user = new LinkTokenCreateRequestUser()
-//                .clientUserId(clientUserId);
-//
-////        for (int i = 0; i < this.plaidProducts.size(); i++){
-////            this.correctedPlaidProducts.add(Products.fromValue(this.plaidProducts.get(i)));
-////        };
-//
-//        for (int i = 0; i < this.countryCodes.size(); i++){
-//            this.correctedCountryCodes.add(CountryCode.fromValue(this.countryCodes.get(i)));
-//        };
-//
-//        LinkTokenCreateRequest request = new LinkTokenCreateRequest()
-//                .user(user)
-//                .clientName("Budget Me")
-//                .products(this.correctedPlaidProducts)
-//                .countryCodes(this.correctedCountryCodes)
-//                .language("en");
-//
-////        Response<LinkTokenCreateResponse> response =plaidClient
-////                .linkTokenCreate(request)
-////                .execute();
-////        return new LinkToken(response.body().getLinkToken());
-//  return "";
-//    }
-//
-//
-//
-//
-//
-//
-//
-//
-//    }
-
 
 

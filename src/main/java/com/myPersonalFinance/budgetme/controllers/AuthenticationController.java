@@ -78,11 +78,12 @@ public class AuthenticationController {
             ResponseEntity<String> responseEntity =
                     new ResponseEntity<>("Login Successful", HttpStatus.OK);
 
-            //Creates a cookie and adds it to the response
-            Cookie userSessionCookie = new Cookie("sessionId", String.valueOf(existingUser.getId()));
+            //Creates a cookie
+            Cookie userSessionCookie = new Cookie("sessionId", String.valueOf(user.getId()));
             userSessionCookie.setPath("/");
             userSessionCookie.setSecure(true);
             userSessionCookie.setHttpOnly(true);
+            //Adds to the response
             response.addCookie(userSessionCookie);
 
 

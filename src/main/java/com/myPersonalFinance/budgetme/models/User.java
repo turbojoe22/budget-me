@@ -1,6 +1,7 @@
 package com.myPersonalFinance.budgetme.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -17,7 +18,7 @@ public class User {
     @Column
     private String password;
     @OneToMany(mappedBy = "user")
-    List<PlaidAccessToken> plaidAccessTokens;
+    private List<PlaidAccessToken> plaidAccessTokens = new ArrayList<>();
 
 
 
@@ -52,4 +53,10 @@ public class User {
     public Object getPassword() {
         return password;
     }
+
+    public List<PlaidAccessToken> getPlaidAccessTokens() {
+        return plaidAccessTokens;
+    }
+
+
 }
