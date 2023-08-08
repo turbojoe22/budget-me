@@ -3,7 +3,9 @@ import LoginPage from "@/views/LoginPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue"
 import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
+import CreateExpense from "@/views/CreateExpense.vue";
 import HomePage from "@/views/HomePage.vue";
+
 
 const routes = [
     {
@@ -17,11 +19,10 @@ const routes = [
         component: LoginPage,
     },
     {
-            path: "/register",
-            name: "RegisterPage",
-            component: RegisterPage,
-        },
-
+        path: "/register",
+        name: "RegisterPage",
+        component: RegisterPage,
+    },
     {
         path: "/transactions",
         name: "TransactionsList",
@@ -31,6 +32,11 @@ const routes = [
         path: "/expenses",
         name: "ExpenseList",
         component: ExpenseList,
+    },
+    {
+        path: "/expenses/create",
+        name: "CreateExpense",
+        component: CreateExpense,
     },
 
 
