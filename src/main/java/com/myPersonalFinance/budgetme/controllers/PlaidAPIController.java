@@ -117,7 +117,25 @@ import java.util.*;
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong...");
             }
 
+
     }
+@GetMapping(path = "getTransactionData")
+    public ResponseEntity getPlaidTransactions(@CookieValue(value = "sessionId") int sessionId){
+
+        List<PlaidAccessToken> userAccessTokens = accessTokenRepository.findByUserId(sessionId);
+
+    for(int i = 0; i < userAccessTokens.size(); i++){
+        List<Transaction> added = new ArrayList<Transaction>();
+        List<Transaction> modified = new ArrayList<Transaction>();
+        boolean hasMore = true;
+        TransactionsSyncRequestOptions options = new TransactionsSyncRequestOptions()
+                .includePersonalFinanceCategory(true);
+
+
+        System.out.println(userAccessTokens.get(i));
+    }
+        return ResponseEntity.ok("ok");
+}
 
 
 

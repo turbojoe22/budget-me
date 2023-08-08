@@ -12,9 +12,10 @@ public class PlaidAccessToken {
     private String accessToken;
     @Column(nullable = false)
     private String itemId;
-    @Column(nullable = false)
-    private String cursor;
+    @Column
+    private String accessTokenCursor;
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     public PlaidAccessToken(){}
@@ -22,7 +23,6 @@ public class PlaidAccessToken {
         this.accessToken = accessToken;
         this.user = user;
         this.itemId = itemId;
-        this.cursor = cursor;
 
     }
 
@@ -41,11 +41,11 @@ public class PlaidAccessToken {
     }
 
     public String getCursor() {
-        return cursor;
+        return accessTokenCursor;
     }
 
     public void setCursor(String cursor) {
-        this.cursor = cursor;
+        this.accessTokenCursor = cursor;
     }
 
     public String getItemId() {

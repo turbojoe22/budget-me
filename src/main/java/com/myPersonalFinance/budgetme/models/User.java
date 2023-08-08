@@ -17,8 +17,6 @@ public class User {
     private String username;
     @Column
     private String password;
-    @OneToMany(mappedBy = "user")
-    private List<PlaidAccessToken> plaidAccessTokens = new ArrayList<>();
 
 
 
@@ -54,9 +52,6 @@ public class User {
         return password;
     }
 
-    public List<PlaidAccessToken> getPlaidAccessTokens() {
-        return plaidAccessTokens;
-    }
 
 
 }
