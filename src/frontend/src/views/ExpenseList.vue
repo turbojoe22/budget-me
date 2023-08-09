@@ -4,7 +4,7 @@
     <h2>Expense List</h2>
     <button @click="getExpenseList">Display Expenses</button>
   </div>
-  <table>
+  <table class="styled-table">
     <thead>
         <tr>
             <th>Name</th>
@@ -26,9 +26,6 @@
                 <td>
                     <button @click="editToggle">Edit</button>
                 </td>
-                <td>
-                    <button @click="deleteExpense(expense.expenseId)">Delete</button>
-                </td>
             </tr>
         </div>
 
@@ -40,7 +37,7 @@
                 <td>{{ expense.dueDate }}</td>
                 <td>{{ expense.category }}</td>
                 <td>
-                    <button @click="editToggle">Editing</button>
+                    <button @click="updateExpense(expense)">Save</button>
                 </td>
                 <td>
                     <button @click="deleteExpense(expense.expenseId)">Delete</button>
@@ -59,6 +56,47 @@
 
 <style>
 
+    table, th, td {
+      border: 1px solid black;
+    }
+    table {
+        text-align: center;
+    }
+
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+
+
+
 </style>
 
 <script>
@@ -68,6 +106,16 @@
     export default {
         data() {
             return {
+
+                expense: {
+                    dueDate: '',
+                    isRepeated: false,
+                    frequency: '',
+                    expenseName: '',
+                    amount: null,
+                    category: ''
+                },
+
                 expenses: null,
                 expenseId: null,
                 isEdit: !Boolean,
@@ -80,14 +128,47 @@
             },
 
             editToggle() {
-                    this.isEdit = !this.isEdit;
+
+                if (this.isEdit) {
+                    this.isEdit = false;
+                } else {
+                    this.isEdit = true;
+                }
             },
+
     	    onEdit(expense){
  	            this.expenses.forEach(element => {
    	                element.isEdit= false;
    	            });
     	        expense.isEdit =true;
     	      },
+
+            async updateExpense(expense) {
+                this.expense = expense;
+
+                const updateExpenseRequest = {
+                    method: "PUT",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(this.expense)
+                }
+
+               try {
+                    const response = await fetch("/api/expenses/update", updateExpenseRequest);
+
+                    if (response.ok) {
+                        this.$router.push('/expenses')
+
+                        await this.getExpenseList();
+
+                    } else {
+                        alert("Expense update failed.")
+                    }
+                } catch (error) {
+                    console.error("Error occurred during expense update.", error);
+                }
+
+              },
+
 
             async deleteExpense(expenseId) {
 

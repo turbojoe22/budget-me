@@ -77,8 +77,7 @@ export default {
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(this.expense)
             }
-            console.log(this.expense);
-            console.log(JSON.stringify(this.expense));
+
 
 
            try {
@@ -92,9 +91,6 @@ export default {
             } catch (error) {
                 console.error("Error occurred during expense creation.", error);
             }
-
-            console.log(this.response);
-
       }
     }
   }
