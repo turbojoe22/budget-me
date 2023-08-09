@@ -108,10 +108,10 @@ public class Expense {
     public String toString() {
 
         if (this.category.equals("")){
-            this.category = "Data not available";
+            this.category = "-";
         }
         if (this.frequency.equals("")) {
-            this.frequency = "Data not available";
+            this.frequency = "-";
         }
         return "\n" + "ID: " + getExpenseId() + "\n" +
                 "Name: " + getExpenseName() + "\n" +

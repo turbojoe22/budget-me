@@ -17,7 +17,7 @@ public class ExpenseController {
     @Autowired
     private ExpenseRepository expenseRepository;
 
-    @PostMapping(path="/create-expense", consumes="application/json")
+    @PostMapping(path = "/create-expense", consumes = "application/json")
     public ResponseEntity<String> createExpense(@RequestBody Expense expense) {
 
         System.out.println(expense.getExpenseId());
@@ -30,12 +30,22 @@ public class ExpenseController {
         }
     }
 
-    @GetMapping(path="/expenses")
+    @GetMapping(path = "/expenses")
     public List<Expense> listExpenses() {
         System.out.println(expenseRepository.findAll());
         return expenseRepository.findAll();
 
     }
-}
 
+    @DeleteMapping(path = "/delete")
+    public void deleteExpense(@RequestBody int expenseId) {
+//        try {
+        expenseRepository.deleteById(expenseId);
+//            return ResponseEntity.ok("Expense created successfully");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during expense creation.");
+//        }
+//    }
+    }
+}
 
