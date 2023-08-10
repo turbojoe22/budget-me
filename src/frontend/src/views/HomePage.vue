@@ -6,6 +6,8 @@
 <!--    <p>{{ answer }}</p>-->
     <h2>Choose an account to Link
       <button @click="connectToBank">Link Account</button>
+      <button @click="getBalance">Get Balance</button>
+
     </h2>
   <br>
   <br>
@@ -83,16 +85,16 @@ methods: {
        handler.open();
 
       },
+      async getBalance(){
+            const response = await fetch("api/plaid/getTransactionData");
+            console.log(response);
 
-    async getBalance(){
-      const response = await fetch("api/plaid/getTransactionData");
-      const data = await response.json();
-      console.log(data);
+            },
 
     },
 
          }
-      }
+
 
 
 

@@ -1,6 +1,7 @@
 package com.myPersonalFinance.budgetme.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 public class PlaidAccessToken {
@@ -13,7 +14,7 @@ public class PlaidAccessToken {
     @Column(nullable = false)
     private String itemId;
     @Column
-    private String accessTokenCursor;
+    private String transactionCursor;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -40,12 +41,12 @@ public class PlaidAccessToken {
         this.accessToken = accessToken;
     }
 
-    public String getCursor() {
-        return accessTokenCursor;
+    public String getTransactionCursor() {
+        return transactionCursor;
     }
 
-    public void setCursor(String cursor) {
-        this.accessTokenCursor = cursor;
+    public void setTransactionCursor(String transactionCursor) {
+        this.transactionCursor = transactionCursor;
     }
 
     public String getItemId() {
