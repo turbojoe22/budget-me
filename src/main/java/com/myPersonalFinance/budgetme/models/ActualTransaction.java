@@ -25,7 +25,6 @@ public class ActualTransaction {
     public ActualTransaction(){};
 
     public ActualTransaction(User user, double amount, LocalDate date, String merchantName, String category) {
-        this.id = id;
         this.user = user;
         this.amount = amount;
         this.date = date;
