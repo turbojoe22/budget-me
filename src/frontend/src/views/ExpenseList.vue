@@ -2,7 +2,7 @@
   <br>
   <div>
     <h2>Expense List</h2>
-    <button @click="getExpenseList">Display Expenses</button>
+    <button v-if="!isHidden" v-on:click="isHidden = true" @click="getExpenseList">Display Expenses</button>
   </div>
   <table class="styled-table">
     <thead>
@@ -13,8 +13,6 @@
             <th>Due Date</th>
             <th>Category</th>
             <th>Edit</th>
-            <th>Save</th>
-            <th>Delete</th>
         </tr>
     </thead>
 
@@ -24,35 +22,52 @@
                 <div v-if=!isEdit>
                 {{ expense.expenseName }}
                 </div>
-
                 <div v-if=isEdit>
                     <input type="text" v-model="expense.expenseName" required>
                 </div>
             </td>
-
-            <td>{{ expense.amount }}</td>
-            <td>{{ expense.frequency }}</td>
-            <td>{{ expense.dueDate }}</td>
-            <td>{{ expense.category }}</td>
             <td>
-                <button @click="editToggle">Edit</button>
+                <div v-if=!isEdit>
+                {{ expense.amount }}
+                </div>
+                <div v-if=isEdit>
+                    <input type="text" v-model="expense.amount" required>
+                </div>
             </td>
             <td>
-                <button @click="updateExpense(expense)">Save</button>
+                <div v-if=!isEdit>
+                {{ expense.frequency }}
+                </div>
+                <div v-if=isEdit>
+                    <input type="text" v-model="expense.frequency" required>
+                </div>
             </td>
             <td>
-                <button @click="deleteExpense(expense.expenseId)">Delete</button>
+                <div v-if=!isEdit>
+                {{ expense.dueDate }}
+                </div>
+                <div v-if=isEdit>
+                    <input type="text" v-model="expense.dueDate" required>
+                </div>
             </td>
-
+            <td>
+                <div v-if=!isEdit>
+                {{ expense.category }}
+                </div>
+                <div v-if=isEdit>
+                    <input type="text" v-model="expense.category" required>
+                </div>
+            </td>
+            <td>
+                <div v-if=!isEdit>
+                    <button @click="editToggle">Edit</button>
+                </div>
+                <div v-if=isEdit>
+                    <button @click="updateExpense(expense)">Save</button>
+                    <button @click="deleteExpense(expense.expenseId)">Delete</button>
+                </div>
+            </td>
         </tr>
-
-
-        <div>
-            <tr>
-
-
-            </tr>
-        </div>
     </tbody>
   </table>
 
@@ -124,10 +139,10 @@
                     amount: null,
                     category: ''
                 },
-
+                isHidden: false,
                 expenses: null,
                 expenseId: null,
-                isEdit: !Boolean,
+                isEdit: false,
             };
         },
 
@@ -166,9 +181,8 @@
 
                     if (response.ok) {
                         this.isEdit = false;
-
                         await this.getExpenseList();
-
+                        this.$router.push('/expenses')
                     } else {
                         alert("Expense update failed.")
                     }
@@ -192,13 +206,10 @@
                try {
                     const response = await fetch("/api/expenses/delete", deleteExpenseRequest);
 
-
                     if (response.ok) {
-                        this.$router.push('/expenses')
-
+                        this.isEdit = false;
                         await this.getExpenseList();
-
-
+                        this.$router.push('/expenses')
                     } else {
                         alert("Expense deletion failed.")
                     }

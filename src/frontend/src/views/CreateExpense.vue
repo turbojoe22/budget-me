@@ -55,9 +55,10 @@
 </style>
 
 <script>
-export default {
-  name: "ExpenseList",
-  data() {
+
+    export default {
+    name: "ExpenseList",
+    data() {
     return {
       expense: {
         dueDate: '',
@@ -68,8 +69,8 @@ export default {
         category: ''
       }
     };
-  },
-  methods: {
+    },
+    methods: {
     async submitExpense() {
 
             const createExpenseRequest = {
@@ -93,7 +94,7 @@ export default {
             }
       }
     }
-  }
+    }
 
 </script>
 
