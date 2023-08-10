@@ -12,36 +12,45 @@
             <th>Frequency</th>
             <th>Due Date</th>
             <th>Category</th>
+            <th>Edit</th>
+            <th>Save</th>
+            <th>Delete</th>
         </tr>
     </thead>
 
     <tbody>
-        <div v-if=!isEdit>
-            <tr v-for="expense in expenses" :key="expense.expenseId">
-                <td>{{ expense.expenseName }}</td>
-                <td>{{ expense.amount }}</td>
-                <td>{{ expense.frequency }}</td>
-                <td>{{ expense.dueDate }}</td>
-                <td>{{ expense.category }}</td>
-                <td>
-                    <button @click="editToggle">Edit</button>
-                </td>
-            </tr>
-        </div>
+        <tr v-for="expense in expenses" :key="expense.expenseId">
+            <td>
+                <div v-if=!isEdit>
+                {{ expense.expenseName }}
+                </div>
 
-        <div v-else>
-            <tr v-for="expense in expenses" :key="expense.expenseId">
-                <td>{{ expense.expenseName }}</td>
-                <td>{{ expense.amount }}</td>
-                <td>{{ expense.frequency }}</td>
-                <td>{{ expense.dueDate }}</td>
-                <td>{{ expense.category }}</td>
-                <td>
-                    <button @click="updateExpense(expense)">Save</button>
-                </td>
-                <td>
-                    <button @click="deleteExpense(expense.expenseId)">Delete</button>
-                </td>
+                <div v-if=isEdit>
+                    <input type="text" v-model="expense.expenseName" required>
+                </div>
+            </td>
+
+            <td>{{ expense.amount }}</td>
+            <td>{{ expense.frequency }}</td>
+            <td>{{ expense.dueDate }}</td>
+            <td>{{ expense.category }}</td>
+            <td>
+                <button @click="editToggle">Edit</button>
+            </td>
+            <td>
+                <button @click="updateExpense(expense)">Save</button>
+            </td>
+            <td>
+                <button @click="deleteExpense(expense.expenseId)">Delete</button>
+            </td>
+
+        </tr>
+
+
+        <div>
+            <tr>
+
+
             </tr>
         </div>
     </tbody>
@@ -123,10 +132,6 @@
         },
 
         methods: {
-            async getExpenseList() { const response = await fetch("/api/expenses/expenses");
-                this.expenses = await response.json();
-            },
-
             editToggle() {
 
                 if (this.isEdit) {
@@ -136,12 +141,16 @@
                 }
             },
 
-    	    onEdit(expense){
- 	            this.expenses.forEach(element => {
-   	                element.isEdit= false;
-   	            });
-    	        expense.isEdit =true;
-    	      },
+            onEdit(expense){
+                this.expenses.forEach(element => {
+                    element.isEdit= false;
+                });
+                expense.isEdit =true;
+            },
+
+            async getExpenseList() { const response = await fetch("/api/expenses/expenses");
+                this.expenses = await response.json();
+            },
 
             async updateExpense(expense) {
                 this.expense = expense;
@@ -156,7 +165,7 @@
                     const response = await fetch("/api/expenses/update", updateExpenseRequest);
 
                     if (response.ok) {
-                        this.$router.push('/expenses')
+                        this.isEdit = false;
 
                         await this.getExpenseList();
 
@@ -167,7 +176,7 @@
                     console.error("Error occurred during expense update.", error);
                 }
 
-              },
+            },
 
 
             async deleteExpense(expenseId) {
