@@ -38,6 +38,6 @@ out/
 /.env
 
 ### distro files ###
-node_modules
+
 
 
