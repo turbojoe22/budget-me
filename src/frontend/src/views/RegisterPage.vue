@@ -1,31 +1,49 @@
 <template>
+  <div id = "nav">
+    <ul>
 
+      <li>
+        <router-link  to="/" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
+          Home</router-link>
+      </li>
+
+
+    </ul>
+
+  </div>
   <router-view></router-view>
-  <div class="bg"></div>
-  <div class="bg bg2"></div>
-  <div class="bg bg3"></div>
- <div class="page"></div>
+  <br>
 
-      <form @submit.prevent="registerUser">
-        <h1>Sign Up</h1>
-        <div>
-          <label for="username">Username</label>
-          <input v-model="username" type="text" placeholder="Username" required />
-        </div>
-        <div>
-          <label for="password">Password</label>
-          <input v-model="password" type="password" placeholder="Password" required />
-        </div>
-        <div>
-          <label for="verifyPassword">Verify Password</label>
-          <input v-model="verifyPassword" type="password" placeholder="Verify Password" required />
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
+  <div id="page">
+    <form @submit.prevent="registerUser">
+      <h1>Sign Up</h1>
+      <div>
+        <label for="username">Username</label>
+        <input v-model="username" type="text" placeholder="Username" required />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input v-model="password" type="password" placeholder="Password" required />
+      </div>
+      <div>
+        <label for="verifyPassword">Verify Password</label>
+        <input v-model="verifyPassword" type="password" placeholder="Verify Password" required />
+      </div>
+      <button type="submit">Sign Up</button>
+
+      <p>
+        <router-link to="/login">Already have an account? Login Here!</router-link>
+      </p>
+    </form>
+  </div>
+
+
     </template>
 
     <script>
     export default {
+
+
       data() {
         return {
           username: "",
