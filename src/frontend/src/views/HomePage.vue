@@ -1,4 +1,5 @@
 <template>
+  <TheNavigation/>
   <br>
   <div id="page">
     <h1>Welcome to Budget Me</h1>
@@ -6,6 +7,8 @@
 <!--    <p>{{ answer }}</p>-->
     <h2>Choose an account to Link
       <button @click="connectToBank">Link Account</button>
+      <button @click="getBalance">Get Balance</button>
+
     </h2>
   <br>
   <br>
@@ -23,15 +26,19 @@
 </style>
 
 <script>
+import TheNavigation from "@/views/TheNavigation.vue";
 export default {
-mounted(){
+  mounted(){
       let Plaid = document.createElement('script')
       Plaid.setAttribute('src', 'https://cdn.plaid.com/link/v2/stable/link-initialize.js')
       document.head.appendChild(Plaid)
     },
 
-
   name: 'HomePage',
+  components: {
+    TheNavigation,
+  },
+
   data() {
     return {
      answer: "",
@@ -42,18 +49,11 @@ mounted(){
   },
 methods: {
 
-//Test code, just grabs a string
-    // async getAnswer() {
-    //   const response = await fetch("/api/getAnswer");
-    //   const answer = await response.json();
-    //   this.answer = answer.data;
-    //   console.log(answer.data);
-    // },
 
 //Gets the link token as a string and returns it
 
       async getLinkToken() {
-         const linkTokenResponse =  await fetch("api/link/generateLinkToken");
+         const linkTokenResponse =  await fetch("api/plaid/generateLinkToken");
          const data = await linkTokenResponse.json();
          const linkToken = data.linkToken;
          console.log(linkToken);
@@ -66,10 +66,11 @@ methods: {
       const handler = window.Plaid.create({
          token : await this.getLinkToken(),
 
-         onSuccess: async (public_token, metadata) => {
-         console.log(public_token, metadata);
-            await fetch ("api/link/createAccessToken", {
+         onSuccess: async (public_token) => {
+
+            await fetch ("api/plaid/createAccessToken", {
                 method: 'POST',
+                credentials: 'include',
                 headers: {'Content-Type': 'text/plain'},
                 body: public_token
             });
@@ -89,17 +90,15 @@ methods: {
        handler.open();
 
       },
+      async getBalance(){
+            const response = await fetch("api/plaid/getTransactionData");
+            console.log(response);
 
-    async getBalance(){
-      const response = await fetch("api/getBalance");
-      const data = await response.json();
-      const balances = data.balances;
-      console.log(balances);
+            },
 
-    }
+    },
 
-    }
-  }
+         }
+
 
 </script>
-

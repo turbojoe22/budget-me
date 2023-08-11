@@ -1,64 +1,102 @@
 <template>
-    <div class="vue-template">
+  <div id = "nav">
+    <ul>
 
-        <form>
-            <h3>Log In</h3>
+      <li>
+        <router-link  to="/" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
+          Home</router-link>
+      </li>
 
-            <div class="form-group">
-                <label>Username</label>
-                <input v-model="user.username" class="form-control form-control-lg" placeholder="username"/>
-            </div>
+    </ul>
 
-            <div class="form-group">
-                <label>Password</label>
-                <input v-model="user.password" class="form-control form-control-lg" placeholder="password"/>
-            </div>
+  </div>
+  <br>
+ <Login />
+  <router-view>
+  </router-view>
+
+  <div id="page">
+    <form @submit.prevent="loginUser">
+      <h1>Login</h1>
+      <div>
+        <label for="username">Username</label>
+        <input v-model="username" type="text" placeholder="Username" required />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input v-model="password" type="password" placeholder="Password" required />
+      </div>
+      <button type="submit">Login</button>
+
+      <p v-if="errorMessage">{{ errorMessage }}</p>
+
+      <p>
+        <router-link to="/register">Don't have an account? Register Here!</router-link>
+      </p>
+
+    </form>
+  </div>
 
 
-                <button @click="validateForm" class="btn btn-dark btn-lg btn-block">Sign In</button>
 
-            <p class="register text-right mt-2 mb-4">
-                <router-link to="/register">Don't have an account? Register Here!</router-link>
-            </p>
 
-        </form>
-    </div>
 </template>
+
+<style>
+
+
+
+</style>
 
 <script>
 
-    export default {
+export default {
 
-        name: 'LoginPage',
-        components: {
+  data() {
+    return {
+      username: "",
+      password: "",
+      errorMessage: "",
+    };
+  },
+  methods: {
+    async loginUser() {
+      const user = {
+        username: this.username,
+        password: this.password,
+      };
 
-        },
-
-        data() {
-            return {
-                registrationStatus: "",
-                errorUsername: "",
-            user: {
-                username: "",
-                password: "",
-
-            },
-        };
-    },
-        methods: {
-            async validateForm() {
-                const userLogin = {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(this.user),
-
-                };
-                console.log(userLogin)
-                const response = await fetch("/auth/login", userLogin);
-               console.log(response);
+      try {
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          credentials: 'include',
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(user),
+        });
 
 
-            }
+        if (response.ok) {
+
+          this.$router.push('/home');
+
+
+        } else if (!response.ok) {
+
+          this.errorMessage = "Invalid credentials. Please try again or register.";
+        } else {
+
+          this.errorMessage = "Login failed. Please try again later.";
+
         }
+      } catch (error) {
+
+        console.error("Error during login", error);
+
+        this.errorMessage = "Username not found. Please register for an account!";
+      }
+
     }
+  }
+}
 </script>
+

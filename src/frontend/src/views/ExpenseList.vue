@@ -1,4 +1,5 @@
 <template>
+  <TheNavigation/>
   <br>
   <div>
     <h2>Expense List</h2>
@@ -223,6 +224,7 @@
               }
         },
     };
+
 </script>
 
 

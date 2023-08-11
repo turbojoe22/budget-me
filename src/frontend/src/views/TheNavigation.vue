@@ -3,16 +3,8 @@
     <ul>
 
       <li>
-        <router-link  to="/" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
+        <router-link  to="/home" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
           Home</router-link>
-      </li>
-      <li>
-        <router-link to="/register"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/newUser.png" height="48" width="48"/>
-          Register</router-link>
-      </li>
-      <li>
-        <router-link to="/login"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/loginimage.png" height="48" width="48"/>
-          Login</router-link>
       </li>
 
       <li>

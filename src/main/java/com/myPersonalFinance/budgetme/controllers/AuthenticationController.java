@@ -2,19 +2,18 @@ package com.myPersonalFinance.budgetme.controllers;
 
 import com.myPersonalFinance.budgetme.data.UserRepository;
 import com.myPersonalFinance.budgetme.models.User;
-import com.myPersonalFinance.budgetme.models.dto.LoginFormDTO;
-import com.myPersonalFinance.budgetme.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -24,105 +23,100 @@ public class AuthenticationController {
 
     private static final String userSessionKey = "user";
 
-    public User getUserFromSession(HttpSession session) {
-
-        Integer userId = (Integer) session.getAttribute(userSessionKey);
-
-        if (userId == null) {
-            return null;
-        }
-
-        Optional<User> user = userRepository.findById(userId);
-
-        return user.orElse(null);
-    }
 
     private static void setUserInSession(HttpSession session, User user) {
 
         session.setAttribute(userSessionKey, user.getId());
     }
 
-    @GetMapping("/login")
-    public String displayLoginForm(Model model) {
-        model.addAttribute(new LoginFormDTO());
-        model.addAttribute("title", "Log In");
-        return "login";
+
+    @PostMapping(path = "/login", consumes = "application/json")
+    public ResponseEntity<String> processLoginForm(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
+
+        User existingUser = userRepository.findByUsername(user.getUsername());
+
+        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
+            // User is authenticated, create a session
+            setUserInSession(request.getSession(), existingUser);
+            //Creates ResponseEntity early to add a cookie to send to frontend
+            ResponseEntity<String> responseEntity =
+                    new ResponseEntity<String>("Login Successful", HttpStatus.OK);
+
+            //Creates a cookie and adds it to the response
+            Cookie userSessionCookie = new Cookie("sessionId", String.valueOf(existingUser.getId()));
+            userSessionCookie.setPath("/");
+            userSessionCookie.setSecure(true);
+            userSessionCookie.setHttpOnly(true);
+            response.addCookie(userSessionCookie);
+
+
+            return responseEntity;
+
+        } else {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during login");
+
+        }
     }
 
-    @PostMapping("/login")
-    public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO,
-                                   Errors errors, HttpServletRequest request, Model model) {
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Log In");
-            return "login";
+
+    @PostMapping(path = "/register", consumes = "application/json")
+    public ResponseEntity<String> processRegistrationForm(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
+
+         //Check if a user with the given username already exists
+        User existingUser = userRepository.findByUsername(user.getUsername());
+
+        if (existingUser != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
         }
 
-//        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
+        try {
+            // Save the new user to the database
+            userRepository.save(user);
+            // Create a user session
+            setUserInSession(request.getSession(), user);
+            ResponseEntity<String> responseEntity =
+                    new ResponseEntity<>("Login Successful", HttpStatus.OK);
 
-//        if (theUser == null) {
-//            errors.rejectValue("username", "user.invalid", "The username does not exist. Please check spelling or register for an account.");
-//            model.addAttribute("title", "Log In");
-//            return "login";
-//        }
+            //Creates a cookie
+            Cookie userSessionCookie = new Cookie("sessionId", String.valueOf(user.getId()));
+            userSessionCookie.setPath("/");
+            userSessionCookie.setSecure(true);
+            userSessionCookie.setHttpOnly(true);
+            //Adds to the response
+            response.addCookie(userSessionCookie);
 
-//        String password = loginFormDTO.getPassword();
-//
-//        if (!theUser.isMatchingPassword(password)) {
-//            errors.rejectValue("password", "password.invalid", "Invalid password");
-//            model.addAttribute("title", "Log In");
-//            return "login";
-//        }
-//
-//        setUserInSession(request.getSession(), theUser);
-//
-//
-        return "redirect:";
+
+            return responseEntity;
+
+
+
+
+
+
+        } catch (Exception e) {
+            // Handle any exceptions that occur during the save operation
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during registration");
+        }
     }
 
 
+    @GetMapping("/{username}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username, @RequestBody User user) {
 
-//    @GetMapping("/register")
-//    public String displayRegistrationForm(Model model) {
-//        model.addAttribute(new RegisterFormDTO());
-//        model.addAttribute("title", "Register");
-//
-//        return "register";
-//    }
-    @PostMapping(path="/register", consumes="application/json")
-    public void processRegistrationForm( @RequestBody User newUser
+        userRepository.findByUsername(username);
 
-//            @ModelAttribute @Valid RegisterFormDTO registerFormDTO,
-//                                          Errors errors, HttpServletRequest request,
-//                                          Model model
-    ) {
+        if (user != null) {
+            return ResponseEntity.ok(user);
 
-
-//        User existingUser = userRepository.findByUsername(registerFormDTO.getUsername());
-        //retrieve user with given username from database
-
-
-        //compare two submitted passwords. If they do not match, give custom error and return user to form
-//        String password = registerFormDTO.getPassword();
-//        String verifyPassword = registerFormDTO.getVerifyPassword();
-
-//        if (!password.equals(verifyPassword)) {
-//            errors.rejectValue("password", "passwords.mismatch", "Passwords do not match");
-//            model.addAttribute("title", "Register");
-//            return "user/register";
-            //errors.rejectValue takes 3 parameters:
-            //1. the field containing the error
-            //2. a label representing the error. This allows error messages to be imported from another file. Even if we don't have such a file, this parameter is required.
-            //3. A default message to use if no external error message file is available
-//        }
-        //If all is valid and a user does not exist, create a new user object, store it in the database, and then create a new session for the user
-//        User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword());
-        userRepository.save(newUser);
-//        setUserInSession(request.getSession(), newUser);
-//        return "redirect:"; //redirect to home page
-
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
+
         request.getSession().invalidate();
         return "redirect:/login";
     }

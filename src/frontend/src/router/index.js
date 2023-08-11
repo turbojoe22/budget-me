@@ -1,27 +1,35 @@
 import { createRouter, createWebHistory } from "vue-router";
+import LandingPage from "@/views/LandingPage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import RegisterPage from "@/views/RegisterPage.vue"
+import HomePage from "@/views/HomePage.vue";
 import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
 import CreateExpense from "@/views/CreateExpense.vue";
-import HomePage from "@/views/HomePage.vue";
+
 
 
 const routes = [
     {
         path: "/",
-        name: "HomePage",
-        component: HomePage,
+        name: "LandingPage",
+        component: LandingPage,
     },
     {
         path: "/login",
         name: "LoginPage",
         component: LoginPage,
+
     },
     {
         path: "/register",
         name: "RegisterPage",
         component: RegisterPage,
+    },
+    {
+         path: "/home",
+         name: "HomePage",
+         component: HomePage,
     },
     {
         path: "/transactions",

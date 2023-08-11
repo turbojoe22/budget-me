@@ -1,12 +1,11 @@
+
 <template >
-  <TheNavigation/>
+  <LandingPage/>
   <router-view></router-view>
   <div class="bg"></div>
   <div class="bg bg2"></div>
   <div class="bg bg3"></div>
-  <div class="page"></div>
-
-
+  <div id="page"></div>
 
 
 </template>
@@ -89,7 +88,7 @@ html {
     padding: 20px;
   }
 
-  h1,h2 {
+  h1,h2,p {
     margin-bottom: 20px;
     text-align: center;
   }
@@ -123,29 +122,13 @@ html {
     font-size: 16px;
   }
 
+
 </style>
 
-
 <script>
-
-
-// import Transactions from "@/views/TransactionsList.vue";
-// import Login from "@/views/LoginPage.vue";
-// import Expenses from "@/views/ExpenseList.vue";
-import TheNavigation from "@/views/TheNavigation.vue";
-
-
-//import 'bootstrap'
-//import 'bootstrap/dist/css/bootstrap.min.css'
-
-
-
-
 export default {
   name: 'App',
   components: {
-
-   TheNavigation,
 
   }
 }

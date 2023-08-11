@@ -1,77 +1,90 @@
 <template>
-    <div class="vue-template">
+  <div id = "nav">
+    <ul>
 
-        <form @submit.prevent="validateForm">
-            <h3>Sign Up</h3>
-
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input v-model="user.username" placeholder="username"/>
-                <p>{{ errorUsername }}</p>
-            </div>
+      <li>
+        <router-link  to="/" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
+          Home</router-link>
+      </li>
 
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input v-model="user.password" placeholder="password"/>
-                <p>{{ errorPassword }}</p>
-            </div>
+    </ul>
 
-            <div class="form-group">
-                <label for="verifyPassword">Verify Password</label>
-                <input v-model="user.verifyPassword" placeholder="verify password" />
-                <p>{{ errorVerifyPassword }}</p>
-            </div>
+  </div>
+  <router-view></router-view>
+  <br>
+
+  <div id="page">
+    <form @submit.prevent="registerUser">
+      <h1>Sign Up</h1>
+      <div>
+        <label for="username">Username</label>
+        <input v-model="username" type="text" placeholder="Username" required />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input v-model="password" type="password" placeholder="Password" required />
+      </div>
+      <div>
+        <label for="verifyPassword">Verify Password</label>
+        <input v-model="verifyPassword" type="password" placeholder="Verify Password" required />
+      </div>
+      <button type="submit">Sign Up</button>
+
+      <p>
+        <router-link to="/login">Already have an account? Login Here!</router-link>
+      </p>
+    </form>
+  </div>
 
 
+    </template>
 
-            <button>Sign Up</button>
+    <script>
+    export default {
 
-        </form>
-    </div>
-</template>
 
-<script>
-       export default {
-               name: "RegisterPage",
-               data() {
-                   return {
-                       registrationStatus: "",
-                       errorUsername: "",
-                       errorPassword: "",
-                       errorVerifyPassword: "",
-                   user: {
-                       username: null,
-                       password: null,
-                       verifyPassword: null,
+      data() {
+        return {
+          username: "",
+          password: "",
+          verifyPassword: "",
+        };
+      },
+      methods: {
+        async registerUser() {
+          if (this.password !== this.verifyPassword) {
+            alert("Passwords do not match");
+            return;
+          }
 
-                   },
-               };
-           },
-               methods: {
-                   async validateForm() {
-                       if (this.user.username === null || this.user.username === '') {
-                          this.errorUsername = "Please enter username";
+          const user = {
+            username: this.username,
+            password: this.password,
+          };
 
-                          }  if (this.user.password === null || this.user.password === '') {
-                                this.errorPassword = "Please enter password";
-                                return;
-                              } else if (this.user.password !== this.user.verifyPassword) {
-                                this.errorVerifyPassword = "Passwords do not match";
-                                return;
-                       }  else {
-                       const userLogin = {
-                       method: "POST",
-                       headers: {"Content-Type": "application/json"},
-                       body: JSON.stringify(this.user),
+          try {
+            const response = await fetch("/api/auth/register", {
+              method: "POST",
+              credentials: 'include',
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(user),
+            });
+            if (response.ok) {
+              this.$router.push('/home');
 
-                       };
+            } else if (response.status === 409) {
+              alert("Username already exists. Please login!");
 
-                      const response = await fetch("/api/auth/register", userLogin);
-                      console.log(response);
+            } else {
+              alert("Registration failed");
 
-                   }
-              }
-           },
-}
-       </script>
+            }
+          } catch (error) {
+            console.error("Error during registration", error);
+
+          }
+        },
+      },
+    };
+    </script>
