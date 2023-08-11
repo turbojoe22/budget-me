@@ -5,6 +5,8 @@ import RegisterPage from "@/views/RegisterPage.vue"
 import HomePage from "@/views/HomePage.vue";
 import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
+import CreateExpense from "@/views/CreateExpense.vue";
+
 
 
 const routes = [
@@ -38,6 +40,11 @@ const routes = [
         path: "/expenses",
         name: "ExpenseList",
         component: ExpenseList,
+    },
+    {
+        path: "/expenses/create",
+        name: "CreateExpense",
+        component: CreateExpense,
     },
 
 
