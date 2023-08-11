@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -29,15 +31,26 @@ public class AuthenticationController {
 
 
     @PostMapping(path = "/login", consumes = "application/json")
-    public ResponseEntity<String> processLoginForm(@RequestBody User user, HttpServletRequest request) {
+    public ResponseEntity<String> processLoginForm(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
 
         User existingUser = userRepository.findByUsername(user.getUsername());
 
         if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
             // User is authenticated, create a session
             setUserInSession(request.getSession(), existingUser);
+            //Creates ResponseEntity early to add a cookie to send to frontend
+            ResponseEntity<String> responseEntity =
+                    new ResponseEntity<String>("Login Successful", HttpStatus.OK);
 
-            return ResponseEntity.ok("Login successful");
+            //Creates a cookie and adds it to the response
+            Cookie userSessionCookie = new Cookie("sessionId", String.valueOf(existingUser.getId()));
+            userSessionCookie.setPath("/");
+            userSessionCookie.setSecure(true);
+            userSessionCookie.setHttpOnly(true);
+            response.addCookie(userSessionCookie);
+
+
+            return responseEntity;
 
         } else {
 
@@ -48,7 +61,7 @@ public class AuthenticationController {
 
 
     @PostMapping(path = "/register", consumes = "application/json")
-    public ResponseEntity<String> processRegistrationForm(@RequestBody User user) {
+    public ResponseEntity<String> processRegistrationForm(@RequestBody User user, HttpServletRequest request, HttpServletResponse response) {
 
          //Check if a user with the given username already exists
         User existingUser = userRepository.findByUsername(user.getUsername());
@@ -60,7 +73,26 @@ public class AuthenticationController {
         try {
             // Save the new user to the database
             userRepository.save(user);
-            return ResponseEntity.ok("Registration successful");
+            // Create a user session
+            setUserInSession(request.getSession(), user);
+            ResponseEntity<String> responseEntity =
+                    new ResponseEntity<>("Login Successful", HttpStatus.OK);
+
+            //Creates a cookie
+            Cookie userSessionCookie = new Cookie("sessionId", String.valueOf(user.getId()));
+            userSessionCookie.setPath("/");
+            userSessionCookie.setSecure(true);
+            userSessionCookie.setHttpOnly(true);
+            //Adds to the response
+            response.addCookie(userSessionCookie);
+
+
+            return responseEntity;
+
+
+
+
+
 
         } catch (Exception e) {
             // Handle any exceptions that occur during the save operation

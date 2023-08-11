@@ -66,10 +66,10 @@
           try {
             const response = await fetch("/api/auth/register", {
               method: "POST",
+              credentials: 'include',
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(user),
             });
-
             if (response.ok) {
               this.$router.push('/home');
 
