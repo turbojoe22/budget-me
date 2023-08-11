@@ -1,5 +1,20 @@
 <template>
-  <TheNavigation/>
+  <div id = "nav">
+    <ul>
+
+      <li>
+        <router-link  to="/home" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
+          Home</router-link>
+      </li>
+
+      <li>
+        <router-link to="/"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/leave.png" height="48" width="48"/>
+          Logout</router-link>
+      </li>
+
+    </ul>
+
+  </div>
   <br>
   <div>
     <h2>Expense List</h2>
@@ -32,7 +47,7 @@
                 {{ expense.amount }}
                 </div>
                 <div v-if=isEdit>
-                    <input type="text" v-model="expense.amount" required>
+                    <input type="number" v-model="expense.amount" required>
                 </div>
             </td>
             <td>
@@ -40,7 +55,12 @@
                 {{ expense.frequency }}
                 </div>
                 <div v-if=isEdit>
-                    <input type="text" v-model="expense.frequency" required>
+                    <select id="frequency" v-model="expense.frequency" required>
+                        <option value="">Select Frequency</option>
+                        <option value="bi-weekly">Bi-Weekly</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                    </select>
                 </div>
             </td>
             <td>
@@ -48,7 +68,7 @@
                 {{ expense.dueDate }}
                 </div>
                 <div v-if=isEdit>
-                    <input type="text" v-model="expense.dueDate" required>
+                    <input type="date" id="dueDate" v-model="expense.dueDate" required>
                 </div>
             </td>
             <td>
@@ -56,7 +76,19 @@
                 {{ expense.category }}
                 </div>
                 <div v-if=isEdit>
-                    <input type="text" v-model="expense.category" required>
+                            <select id="category" v-model="expense.category" required>
+                                <option value="Loan Payments">Loan Payments</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Food and Drink">Food and Drink</option>
+                                <option value="General Merchandise">General Merchandise</option>
+                                <option value="Home Improvement">Home Improvement</option>
+                                <option value="Medical">Medical</option>
+                                <option value="Personal Care">Personal Care</option>
+                                <option value="General Services">General Services</option>
+                                <option value="Transportation">Transportation</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Rent and Utilities">Rent and Utilities</option>
+                            </select>
                 </div>
             </td>
             <td>
@@ -86,11 +118,13 @@
     }
     table {
         text-align: center;
+
     }
 
     .styled-table {
         border-collapse: collapse;
-        margin: 25px 0;
+        margin-left: auto;
+        margin-right: auto;
         font-size: 0.9em;
         font-family: sans-serif;
         min-width: 400px;

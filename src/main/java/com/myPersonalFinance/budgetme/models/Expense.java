@@ -12,6 +12,8 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int expenseId;
+
+
     @Column
     @NotBlank(message= "Name is required")
     private String expenseName;
