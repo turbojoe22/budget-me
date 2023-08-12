@@ -3,11 +3,10 @@
   <br>
   <div id="page">
     <h1>Welcome to Budget Me</h1>
-<!--    <button @click="getAnswer">Go</button>-->
-<!--    <p>{{ answer }}</p>-->
+
     <h2>Choose an account to Link
       <button @click="connectToBank">Link Account</button>
-      <button @click="getBalance">Get Balance</button>
+      <button @click="getTransactions">Get Transactions</button>
 
     </h2>
   <br>
@@ -74,7 +73,6 @@ methods: {
                 headers: {'Content-Type': 'text/plain'},
                 body: public_token
             });
-           await this.getBalance();
            },
          onExit: async (err, metadata) => {
            console.log(
@@ -90,7 +88,7 @@ methods: {
        handler.open();
 
       },
-      async getBalance(){
+      async getTransactions(){
             const response = await fetch("api/plaid/getTransactionData");
             console.log(response);
 

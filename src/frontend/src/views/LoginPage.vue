@@ -3,8 +3,7 @@
     <ul>
 
       <li>
-        <router-link  to="/" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
-          Home</router-link>
+
       </li>
 
     </ul>

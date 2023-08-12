@@ -29,7 +29,19 @@
 
 </style>
 
-<script >
+<script>
+export default {
+
+        created () {
+        this.deleteCookie()
+        },
+        methods: {
+        async deleteCookie(){
+        const response = await fetch("/api/auth/logout", {credentials: 'same-origin'});
+        console.log(response);
+        },
+        }
+       }
 
 </script>
 

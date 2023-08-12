@@ -2,6 +2,7 @@
   <TheNavigation/>
   <br>
   <div>
+
     <h2>Expense List</h2>
     <button v-if="!isHidden" v-on:click="isHidden = true" @click="getExpenseList">Display Expenses</button>
   </div>
@@ -164,7 +165,8 @@
                 expense.isEdit =true;
             },
 
-            async getExpenseList() { const response = await fetch("/api/expenses/expenses");
+            async getExpenseList() {
+            const response = await fetch("/api/expenses/expenses");
                 this.expenses = await response.json();
             },
 
