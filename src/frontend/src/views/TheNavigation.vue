@@ -8,6 +8,12 @@
       </li>
 
       <li>
+      <router-link to="/transactions">
+      <img src="../../../main/java/com/myPersonalFinance/budgetme/assets/moneyImage.png" height="48" width="48"/>
+      Transactions </router-link>
+      </li>
+
+      <li>
         <router-link to="/"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/leave.png" height="48" width="48"/>
           Logout</router-link>
       </li>

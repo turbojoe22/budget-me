@@ -22,6 +22,7 @@ public class AuthenticationController {
     private UserRepository userRepository;
 
     private static final String userSessionKey = "user";
+    private HttpServletResponse response;
 
 
     private static void setUserInSession(HttpSession session, User user) {
@@ -44,6 +45,7 @@ public class AuthenticationController {
 
             //Creates a cookie and adds it to the response
             Cookie userSessionCookie = new Cookie("sessionId", String.valueOf(existingUser.getId()));
+            userSessionCookie.setMaxAge(-1);
             userSessionCookie.setPath("/");
             userSessionCookie.setSecure(true);
             userSessionCookie.setHttpOnly(true);
@@ -80,6 +82,7 @@ public class AuthenticationController {
 
             //Creates a cookie
             Cookie userSessionCookie = new Cookie("sessionId", String.valueOf(user.getId()));
+            userSessionCookie.setMaxAge(-1);
             userSessionCookie.setPath("/");
             userSessionCookie.setSecure(true);
             userSessionCookie.setHttpOnly(true);
@@ -115,10 +118,20 @@ public class AuthenticationController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public ResponseEntity logout(HttpServletRequest request, HttpServletResponse response) {
+
+
+        //Creates a cookie
+        Cookie userSessionCookie = new Cookie("sessionId", "");
+        userSessionCookie.setMaxAge(0);
+        userSessionCookie.setPath("/");
+        userSessionCookie.setSecure(true);
+        userSessionCookie.setHttpOnly(true);
+        //Adds to the http response
+        response.addCookie(userSessionCookie);
 
         request.getSession().invalidate();
-        return "redirect:/login";
+        return  ResponseEntity.ok("Logout Successful");
     }
 }
 
