@@ -18,11 +18,11 @@ public class Expense {
     private User user;
 
     @Column
-    @NotBlank(message= "Name is required")
+    @NotBlank(message = "Name is required")
     private String expenseName;
 
     @Column
-    private int amount ;
+    private int amount;
     @Column
     String frequency;
 
@@ -34,7 +34,7 @@ public class Expense {
     private String category;
 
 
-    public Expense(String expenseName,int amount, String frequency, boolean isRepeated, String dueDate, String category) {
+    public Expense(String expenseName, int amount, String frequency, boolean isRepeated, String dueDate, String category) {
         this.expenseName = expenseName;
         this.amount = amount;
         this.frequency = frequency;
@@ -43,7 +43,18 @@ public class Expense {
         this.category = category;
     }
 
-    public Expense() {}
+    public Expense() {
+    }
+
+//    public Expense(User user, String expenseName,int amount, String frequency, boolean isRepeated, String dueDate, String category) {
+//        this.user = user;
+//        this.expenseName = expenseName;
+//        this.amount = amount;
+//        this.frequency = frequency;
+//        this.isRepeated = isRepeated;
+//        this.dueDate = dueDate;
+//        this.category = category;
+//    }
 
     public int getExpenseId() {
         return expenseId;
@@ -95,6 +106,14 @@ public class Expense {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
