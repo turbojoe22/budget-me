@@ -13,6 +13,9 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int expenseId;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column
     @NotBlank(message= "Name is required")

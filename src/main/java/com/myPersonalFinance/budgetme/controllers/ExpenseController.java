@@ -18,13 +18,13 @@ public class ExpenseController {
     private ExpenseRepository expenseRepository;
 
     @PostMapping(path = "/create-expense", consumes = "application/json")
-    public ResponseEntity<String> createExpense(@RequestBody Expense expense) {
-        try {
+    public void createExpense(@RequestBody Expense expense) {
+//        try {
             expenseRepository.save(expense);
-            return ResponseEntity.ok("Expense created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during expense creation.");
-        }
+//            return ResponseEntity.ok("Expense created successfully");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during expense creation.");
+//        }
     }
 
     @GetMapping(path = "/expenses")
