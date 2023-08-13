@@ -14,6 +14,13 @@
       </li>
 
       <li>
+      <router-link to="/budget-period-list">
+      <img src="../../../main/java/com/myPersonalFinance/budgetme/assets/moneyImage.png" height="48" width="48"/>
+      Budget Period </router-link>
+      </li>
+
+
+      <li>
         <router-link to="/"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/leave.png" height="48" width="48"/>
           Logout</router-link>
       </li>
