@@ -7,33 +7,57 @@
 
     <!-- Display the list of budget periods -->
 
-    <ul class="budget-period-list">
-      <li class="budget-period-item" v-for="budgetPeriod in budgetPeriods" :key="budgetPeriod.id">
-
+    <ul>
+      <li v-for="budgetPeriod in budgetPeriods" :key="budgetPeriod.id">
       <div class="period-info">
-     <span class="period-date"> Start Date: {{ budgetPeriod.startDate }}</span>
+        <span class="period-date"> Start Date: {{ budgetPeriod.startDate }}</span>
         <span class="period-date">End Date: {{ budgetPeriod.endDate }}</span>
-       </div>
-
+        <button @click="deletePeriod(budgetPeriod.id)"> Delete </button>
+      </div>
       </li>
     </ul>
-  </div>
+    </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      budgetPeriods: [], // Store the list of budget periods
-    };
+        budgetPeriod: {
+        startDate: '', // Store the selected start date
+        endDate: '', // Store the selected end date
+    },
+     budgetPeriods: [], // Store the list of budget periods
+     id: null,
+    }
+
   },
   created() {
     this.fetchBudgetPeriods();
   },
   methods: {
-    async fetchBudgetPeriods() {
+    async deletePeriod(id) {
+     this.id = id;
+    const deletePeriodRequest = {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(this.id)
+       }
       try {
-        const response = await fetch('/api/budget-period-list');
+        const response = await fetch('/api/budget-period-list/delete', deletePeriodRequest)
+        if (response.ok) {
+        return response.json();
+        } else {
+          console.error('Error deleting budget periods');
+        }
+      } catch (error) {
+        console.error('Error deleting budget periods', error);
+      }
+   },
+
+async fetchBudgetPeriods() {
+      try {
+        const response = await fetch(`/api/budget-period-list/list`);
         if (response.ok) {
           this.budgetPeriods = await response.json();
         } else {
@@ -45,6 +69,8 @@ export default {
     },
   },
 };
+
+
 </script>
 
 <style>

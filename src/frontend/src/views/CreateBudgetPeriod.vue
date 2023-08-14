@@ -187,9 +187,12 @@ export default {
     },
 async fetchExpenses() {
       try {
-        const response = await fetch('/api/expenses/expenses')
+        const response = await fetch('/api/expenses/expenses', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+});
         if (response.ok) {
-          this.expenses = await response.json();
+          this.expense = await response.json();
         } else {
           console.error('Error fetching expenses');
         }
@@ -198,14 +201,14 @@ async fetchExpenses() {
       }
     },
 
-
-
    async submitForm() {
       const formData = {
         selectedExpenses: this.selectedExpenses,
         startDate: this.startDate,
         endDate: this.endDate,
          };
+                  console.log('Form data:', formData);
+
 
           // Create the request options with the correct headers
           try {
@@ -215,7 +218,6 @@ async fetchExpenses() {
                  body: JSON.stringify(formData),
                });
 
-         console.log('Form data:', formData);
 
 
                  // Send the data to the backend endpoint
