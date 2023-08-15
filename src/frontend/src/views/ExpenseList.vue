@@ -191,9 +191,9 @@
             async updateExpense(expense) {
 
                 if (this.expense != "once") {
-                    this.expense.frequency = expense.frequency;
+                    this.isRepeated = true;
                 } else {
-
+                    this.isRepeated = false;
                 }
 
                 this.expense = expense;
