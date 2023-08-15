@@ -12,7 +12,7 @@
       <div class="period-info">
         <span class="period-date"> Start Date: {{ budgetPeriod.startDate }}</span>
         <span class="period-date">End Date: {{ budgetPeriod.endDate }}</span>
-        <button @click="deletePeriod(budgetPeriod.id)"> Delete </button>
+        <button @click="deletePeriod(budgetPeriod)"> Delete </button>
       </div>
       </li>
     </ul>
@@ -36,17 +36,16 @@ export default {
     this.fetchBudgetPeriods();
   },
   methods: {
-    async deletePeriod(id) {
-     this.id = id;
-    const deletePeriodRequest = {
+    async deletePeriod(budgetPeriod) {
+     try {
+       const response = await fetch(`/api/budget-period-list/delete`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(this.id)
-       }
-      try {
-        const response = await fetch('/api/budget-period-list/delete', deletePeriodRequest)
+        body: JSON.stringify(budgetPeriod),
+       });
         if (response.ok) {
-        return response.json();
+          this.budgetPeriods = await response;
+          this.fetchBudgetPeriods();
         } else {
           console.error('Error deleting budget periods');
         }
@@ -59,7 +58,9 @@ async fetchBudgetPeriods() {
       try {
         const response = await fetch(`/api/budget-period-list/list`);
         if (response.ok) {
-          this.budgetPeriods = await response.json();
+        const displayPeriods = await response.json();
+          this.budgetPeriods = displayPeriods.reverse();
+
         } else {
           console.error('Error fetching budget periods');
         }

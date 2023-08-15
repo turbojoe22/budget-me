@@ -73,17 +73,19 @@ public class BudgetPeriodController {
 //    }
 //
     @PostMapping(path = "/delete")
-    public ResponseEntity<List<BudgetPeriod>> deleteBudgetPeriod(@RequestBody List <Integer> budgetPeriodIds) {
-        try {
-            for (Integer budgetPeriodId : budgetPeriodIds) {
-                budgetPeriodRepository.deleteById(budgetPeriodId);
-        }
-            List<BudgetPeriod> budgetPeriods = budgetPeriodRepository.findAll();
+    public ResponseEntity <String> deleteBudgetPeriod(@RequestBody BudgetPeriod budgetPeriod) {
+//        try {
+//                if (budgetPeriodRepository.existsById(budgetPeriod.getId())) {
+//                    budgetPeriodRepository.deleteById(budgetPeriod.getId());
+//                } else {
+//                    return ResponseEntity.badRequest().body(null);
+//                }
+              budgetPeriodRepository.deleteById(budgetPeriod.getId());
 
-            return ResponseEntity.ok(budgetPeriods);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//
+            return ResponseEntity.ok("ok");
+//            } catch (Exception e) {
         }
     }
-}
+
 

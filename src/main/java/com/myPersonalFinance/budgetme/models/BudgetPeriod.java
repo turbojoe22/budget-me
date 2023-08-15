@@ -33,6 +33,10 @@ public class BudgetPeriod {
         //this.budgetAmount = budgetAmount;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getStartDate() {
         return startDate;
     }

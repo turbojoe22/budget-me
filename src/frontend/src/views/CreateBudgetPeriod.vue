@@ -19,21 +19,23 @@
     <!-- Dropdown list to select an expense -->
        <div class="expense-select">
          <label for="expense">Select Expenses</label>
-         <select id="expense" v-model="selectedExpense">
-           <option v-for="expense in expenses" :key="expense.id" :value="expense.id">
+         <select id="expense" v-model="selectedExpenses">
+           <option v-for="expense in expenses" :key="expense.expenseId" :value="expense.expenseName">
              {{ expense.expenseName }}
+
            </option>
          </select>
-         <button @click="addExpense">Add</button>
+       <button @click="addExpense">Add</button>
+
        </div>
 
        <!-- List of selected expenses -->
        <div v-if="selectedExpenses.length > 0" class="selected-expenses">
          <h2>Selected Expenses:</h2>
          <ul>
-           <li v-for="expense in selectedExpenses" :key="expense.id">
+           <li v-for="expense in selectedExpenses" :key="expense.expenseId">
              {{ expense.expenseName }}
-             <button @click="removeExpense(expense.id)">Remove</button>
+             <button @click="removeExpense(expense.expenseId)">Remove</button>
            </li>
          </ul>
        </div>
@@ -165,25 +167,26 @@ export default {
   computed: {
     // Computed property to generate the expenses text for the textarea
     expensesText() {
-      return this.selectedExpenses.map((expense) => expense.expenseName).join('\n');
+      return this.selectedExpenses;
     },
   },
   methods: {
     addExpense() {
+    console.log("Hello");
       // Find the selected expense object based on the selectedExpense ID
       const selectedExpense = this.expenses.find((expense) => expense.id === this.selectedExpense);
       if (selectedExpense) {
         // Add the selected expense to the list of selectedExpenses
         this.selectedExpenses.push(selectedExpense);
         // Add the selected expense name to the expensesText
-        this.expensesText = this.selectedExpenses.map((expense) => expense.expenseName).join('\n');
+        this.expensesText = this.selectedExpenses;
         // Clear the selectedExpense to reset the dropdown to its default state
         this.selectedExpense = '';
       }
     },
-    removeExpense(expenseId) {
+    removeExpense() {
       // Remove the selected expense from the list of selectedExpenses
-      this.selectedExpenses = this.selectedExpenses.filter((expense) => expense.id !== expenseId);
+      this.selectedExpenses = this.selectedExpense;
     },
 async fetchExpenses() {
       try {
@@ -192,7 +195,8 @@ async fetchExpenses() {
         headers: { 'Content-Type': 'application/json' },
 });
         if (response.ok) {
-          this.expense = await response.json();
+          this.expenses = await response.json();
+          console.log(this.expenses);
         } else {
           console.error('Error fetching expenses');
         }
