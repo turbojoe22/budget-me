@@ -1,4 +1,5 @@
 <template>
+    <TheNavigation/>
   <br>
   <div class="expense-form">
     <h2>Create Expense</h2>
@@ -55,45 +56,50 @@
 </style>
 
 <script>
+    import TheNavigation from "@/views/TheNavigation.vue";
 
     export default {
-    name: "ExpenseList",
-    data() {
-    return {
-      expense: {
-        dueDate: '',
-        isRepeated: false,
-        frequency: '',
-        expenseName: '',
-        amount: null,
-        category: ''
-      }
-    };
-    },
-    methods: {
-    async submitExpense() {
+        components: {
+            TheNavigation,
+        },
 
-            const createExpenseRequest = {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(this.expense)
-            }
-
-
-
-           try {
-                const response = await fetch("/api/expenses/create-expense", createExpenseRequest);
-
-                if (response.ok) {
-                    this.$router.push('/expenses')
-                } else {
-                    alert("Expense creation failed.")
+        name: "ExpenseList",
+        data() {
+            return {
+                expense: {
+                    dueDate: '',
+                    isRepeated: false,
+                    frequency: '',
+                    expenseName: '',
+                    amount: null,
+                    category: ''
                 }
-            } catch (error) {
-                console.error("Error occurred during expense creation.", error);
+            };
+        },
+
+        methods: {
+            async submitExpense() {
+                const createExpenseRequest = {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(this.expense)
+                }
+
+                try {
+                    const response = await fetch("/api/expenses/create-expense", createExpenseRequest);
+
+                    if (response.ok) {
+                        this.$router.push('/expenses')
+                    } else {
+                        alert("Expense creation failed.")
+                    }
+                }
+
+                catch (error) {
+                    console.error("Error occurred during expense creation.", error);
+                }
             }
-      }
-    }
+        }
     }
 
 </script>

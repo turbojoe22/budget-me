@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.Objects;
 
 
@@ -29,12 +30,12 @@ public class Expense {
     @Column
     private boolean isRepeated;
     @Column
-    String dueDate;
+    Date dueDate;
     @Column
     private String category;
 
 
-    public Expense(String expenseName, int amount, String frequency, boolean isRepeated, String dueDate, String category) {
+    public Expense(String expenseName, int amount, String frequency, boolean isRepeated, Date dueDate, String category) {
         this.expenseName = expenseName;
         this.amount = amount;
         this.frequency = frequency;
@@ -92,12 +93,12 @@ public class Expense {
         this.isRepeated = isRepeated;
     }
 
-    public String getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDue_date(String due_date) {
-        this.dueDate = due_date;
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public String getCategory() {

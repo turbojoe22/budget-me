@@ -1,113 +1,100 @@
 <template>
-  <div id = "nav">
-    <ul>
-
-      <li>
-        <router-link  to="/home" ><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/budgetlogo.png" height="48" width="48"/>
-          Home</router-link>
-      </li>
-
-      <li>
-        <router-link to="/"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/leave.png" height="48" width="48"/>
-          Logout</router-link>
-      </li>
-
-    </ul>
-
-  </div>
+    <TheNavigation/>
   <br>
-  <div>
-    <h2>Expense List</h2>
-    <button v-if="!isHidden" v-on:click="isHidden = true" @click="getExpenseList">Display Expenses</button>
-  </div>
-  <table class="styled-table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Frequency</th>
-            <th>Due Date</th>
-            <th>Category</th>
-            <th>Edit</th>
-        </tr>
-    </thead>
+  <div id="page">
+      <div>
+        <h2>Expense List</h2>
+        <button v-if="!isHidden" v-on:click="isHidden = true" @click="getExpenseList">Display Expenses</button>
+      </div>
 
-    <tbody>
-        <tr v-for="expense in expenses" :key="expense.expenseId">
-            <td>
-                <div v-if=!isEdit>
-                {{ expense.expenseName }}
-                </div>
-                <div v-if=isEdit>
-                    <input type="text" v-model="expense.expenseName" required>
-                </div>
-            </td>
-            <td>
-                <div v-if=!isEdit>
-                {{ expense.amount }}
-                </div>
-                <div v-if=isEdit>
-                    <input type="number" v-model="expense.amount" required>
-                </div>
-            </td>
-            <td>
-                <div v-if=!isEdit>
-                {{ expense.frequency }}
-                </div>
-                <div v-if=isEdit>
-                    <select id="frequency" v-model="expense.frequency" required>
-                        <option value="">Select Frequency</option>
-                        <option value="bi-weekly">Bi-Weekly</option>
-                        <option value="weekly">Weekly</option>
-                        <option value="monthly">Monthly</option>
-                    </select>
-                </div>
-            </td>
-            <td>
-                <div v-if=!isEdit>
-                {{ expense.dueDate }}
-                </div>
-                <div v-if=isEdit>
-                    <input type="date" id="dueDate" v-model="expense.dueDate" required>
-                </div>
-            </td>
-            <td>
-                <div v-if=!isEdit>
-                {{ expense.category }}
-                </div>
-                <div v-if=isEdit>
-                            <select id="category" v-model="expense.category" required>
-                                <option value="Loan Payments">Loan Payments</option>
-                                <option value="Entertainment">Entertainment</option>
-                                <option value="Food and Drink">Food and Drink</option>
-                                <option value="General Merchandise">General Merchandise</option>
-                                <option value="Home Improvement">Home Improvement</option>
-                                <option value="Medical">Medical</option>
-                                <option value="Personal Care">Personal Care</option>
-                                <option value="General Services">General Services</option>
-                                <option value="Transportation">Transportation</option>
-                                <option value="Travel">Travel</option>
-                                <option value="Rent and Utilities">Rent and Utilities</option>
-                            </select>
-                </div>
-            </td>
-            <td>
-                <div v-if=!isEdit>
-                    <button @click="editToggle">Edit</button>
-                </div>
-                <div v-if=isEdit>
-                    <button @click="updateExpense(expense)">Save</button>
-                    <button @click="deleteExpense(expense.expenseId)">Delete</button>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-  </table>
+      <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Frequency</th>
+                <th>Due Date</th>
+                <th>Category</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr v-for="expense in expenses" :key="expense.expenseId">
+                <td>
+                    <div v-if=!expense.isEdit>
+                    {{ expense.expenseName }}
+                    </div>
+                    <div v-if=expense.isEdit>
+                        <input type="text" v-model="expense.expenseName" size="50" required>
+                    </div>
+                </td>
+                <td>
+                    <div v-if=!expense.isEdit>
+                    {{ expense.amount }}
+                    </div>
+                    <div v-if=expense.isEdit>
+                        <input type="number" v-model="expense.amount" size="50" required>
+                    </div>
+                </td>
+                <td>
+                    <div v-if=!expense.isEdit>
+                    {{ expense.frequency }}
+                    </div>
+                    <div v-if=expense.isEdit>
+                        <select id="frequency" v-model="expense.frequency" required>
+                            <option value="">Select Frequency</option>
+                            <option value="bi-weekly">Bi-Weekly</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div v-if=!expense.isEdit>
+                    {{ expense.dueDate }}
+                    </div>
+                    <div v-if=expense.isEdit>
+                        <input type="date" id="dueDate" v-model="expense.dueDate" required>
+                    </div>
+                </td>
+                <td>
+                    <div v-if=!expense.isEdit>
+                    {{ expense.category }}
+                    </div>
+                    <div v-if=expense.isEdit>
+                        <select id="category" v-model="expense.category" required>
+                            <option value="Loan Payments">Loan Payments</option>
+                            <option value="Entertainment">Entertainment</option>
+                            <option value="Food and Drink">Food and Drink</option>
+                            <option value="General Merchandise">General Merchandise</option>
+                            <option value="Home Improvement">Home Improvement</option>
+                            <option value="Medical">Medical</option>
+                            <option value="Personal Care">Personal Care</option>
+                            <option value="General Services">General Services</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Travel">Travel</option>
+                            <option value="Rent and Utilities">Rent and Utilities</option>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div v-if=!expense.isEdit>
+                        <button @click="onEdit(expense)">Edit</button>
+                    </div>
+                    <div v-if=expense.isEdit>
+                        <button @click="updateExpense(expense)">Save</button>
+                        <button @click="deleteExpense(expense.expenseId)">Delete</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+      </table>
 
 
-  <router-link to="/expenses/create" custom v-slot="{ navigate }"><button @click="navigate" role="link">Create an Expense</button></router-link>
+      <router-link to="/expenses/create" custom v-slot="{ navigate }"><button @click="navigate" role="link">Create an Expense</button></router-link>
 
-
+    </div>
 
 </template>
 
@@ -122,6 +109,7 @@
     }
 
     .styled-table {
+        padding: 15px;
         border-collapse: collapse;
         margin-left: auto;
         margin-right: auto;
@@ -159,11 +147,20 @@
 </style>
 
 <script>
+    import TheNavigation from "@/views/TheNavigation.vue";
 
     export default {
+
+        created() {
+            this.getExpenseList();
+        },
+
+        components: {
+            TheNavigation,
+        },
+
         data() {
             return {
-
                 expense: {
                     dueDate: '',
                     isRepeated: false,
@@ -175,25 +172,16 @@
                 isHidden: false,
                 expenses: null,
                 expenseId: null,
-                isEdit: false,
             };
         },
 
         methods: {
-            editToggle() {
-
-                if (this.isEdit) {
-                    this.isEdit = false;
-                } else {
-                    this.isEdit = true;
-                }
-            },
 
             onEdit(expense){
                 this.expenses.forEach(element => {
-                    element.isEdit= false;
+                    element.isEdit = false;
                 });
-                expense.isEdit =true;
+                expense.isEdit = true;
             },
 
             async getExpenseList() { const response = await fetch("/api/expenses/expenses");
@@ -201,6 +189,13 @@
             },
 
             async updateExpense(expense) {
+
+                if (this.expense != "once") {
+                    this.expense.frequency = expense.frequency;
+                } else {
+
+                }
+
                 this.expense = expense;
 
                 const updateExpenseRequest = {
@@ -225,7 +220,6 @@
 
             },
 
-
             async deleteExpense(expenseId) {
 
                 this.expenseId = expenseId;
@@ -249,10 +243,6 @@
                 } catch (error) {
                     console.error("Error occurred during expense deletion.", error);
                 }
-
-                console.log(this.expenses.expenseId);
-
-
               }
         },
     };
