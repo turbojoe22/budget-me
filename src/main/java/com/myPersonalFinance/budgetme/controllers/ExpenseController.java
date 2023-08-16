@@ -23,33 +23,26 @@ public class ExpenseController {
     private UserRepository userRepository;
 
     @PostMapping(path = "/create-expense", consumes = "application/json")
-    public void createExpense(@RequestBody Expense expense, @CookieValue(value = "sessionId") int sessionId) {
-//        try {
-
+    public ResponseEntity<String> createExpense(@RequestBody Expense expense, @CookieValue(value = "sessionId") int sessionId) {
+        try {
             User user = userRepository.findById(sessionId);
-
-        expense.setUser(user);
-
-
-        expenseRepository.save(expense);
-//            return ResponseEntity.ok("Expense created successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during expense creation.");
-//        }
+            expense.setUser(user);
+            expenseRepository.save(expense);
+            return ResponseEntity.ok("Expense created successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during expense creation.");
+        }
     }
 
     @GetMapping(path = "/expenses")
     public List<Expense> listExpenses() {
         return expenseRepository.findAll();
-
     }
 
     @PutMapping(path = "/update", consumes = "application/json")
     public ResponseEntity<String> updateExpense(@RequestBody Expense expense) {
         try {
-
             expenseRepository.save(expense);
-
             return ResponseEntity.ok("Expense created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during expense creation.");
