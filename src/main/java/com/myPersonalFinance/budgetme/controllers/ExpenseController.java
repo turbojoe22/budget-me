@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -35,8 +36,15 @@ public class ExpenseController {
     }
 
     @GetMapping(path = "/expenses")
-    public List<Expense> listExpenses() {
-        return expenseRepository.findAll();
+    public List<Expense> listExpenses(@CookieValue(value = "sessionId") int sessionId) {
+        List<Expense> allExpenses = expenseRepository.findAll();
+        List<Expense> userExpenses = new ArrayList<Expense>();
+        for (Expense expense : allExpenses) {
+            if (expense.getUser().getId() == sessionId) {
+                userExpenses.add(expense);
+            }
+        }
+        return userExpenses;
     }
 
     @PutMapping(path = "/update", consumes = "application/json")
