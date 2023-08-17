@@ -125,6 +125,9 @@ import java.util.stream.Collectors;
     public ResponseEntity getPlaidTransactions(@CookieValue(value = "sessionId") int sessionId) throws IOException {
         //Grabs a list of access tokens from the database using the logged in user's id and the current user
         List<PlaidAccessToken> userAccessTokens = accessTokenRepository.findByUserId(sessionId);
+        if (userAccessTokens == null){
+            return ResponseEntity.status(400).body("Please link a bank account");
+        }
         User user = userRepository.findById(sessionId);
 
         //Initializes the plaid client if it's null
