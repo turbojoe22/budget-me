@@ -179,6 +179,7 @@
 
             async getExpenseList() {
                 const response = await fetch("/api/expenses/expenses");
+
                 this.expenses = await response.json();
             },
 

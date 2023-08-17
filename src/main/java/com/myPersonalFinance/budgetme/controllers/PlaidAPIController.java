@@ -150,6 +150,8 @@ import java.util.stream.Collectors;
             //hasMore is returned by plaid, stops the loop for an access token when false
             boolean hasMore = true;
             while(hasMore == true){
+                System.out.println(hasMore);
+
                 //Creates a request object to send to plaid with the user and cursor
                 TransactionsSyncRequest request = new TransactionsSyncRequest()
                         .accessToken(userAccessTokens.get(i).getAccessToken())
