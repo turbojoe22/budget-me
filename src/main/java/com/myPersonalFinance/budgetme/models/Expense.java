@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -24,7 +27,7 @@ public class Expense {
     @NotBlank(message = "Name is required")
     private String expenseName;
 
-    @Column
+    @Column(precision=8, scale=2)
     private double amount;
     @Column
     String frequency;

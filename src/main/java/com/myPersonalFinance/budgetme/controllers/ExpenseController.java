@@ -51,6 +51,7 @@ public class ExpenseController {
     public ResponseEntity<String> updateExpense(@RequestBody Expense expense) {
         try {
             expenseRepository.save(expense);
+            System.out.println(expense.getAmount());
             return ResponseEntity.ok("Expense created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred during expense creation.");

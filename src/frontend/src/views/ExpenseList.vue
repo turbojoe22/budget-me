@@ -31,7 +31,7 @@
                     </td>
                     <td>
                         <div v-if=!expense.isEdit>
-                            {{ expense.amount }}
+                            ${{ formatNumber(expense.amount) }}
                         </div>
                         <div v-if=expense.isEdit>
                             <input type="number" min="0.01" step="0.01" v-model="expense.amount" required>
@@ -44,10 +44,10 @@
                         <div v-if=expense.isEdit>
                             <select id="frequency" v-model="expense.frequency" required>
                                 <option value="">Select Frequency</option>
+                                <option value="">Once</option>
                                 <option value="bi-weekly">Bi-Weekly</option>
                                 <option value="weekly">Weekly</option>
                                 <option value="monthly">Monthly</option>
-                                <option value="Once">Once</option>
                             </select>
                         </div>
                     </td>
@@ -170,7 +170,6 @@
         },
 
         methods: {
-
             onEdit(expense){
                 this.expenses.forEach(element => {
                     element.isEdit = false;
@@ -191,7 +190,7 @@
                 }
 
                 this.expense = expense;
-                console.log(this.expense.amount);
+                console.log(expense.amount);
                 const updateExpenseRequest = {
                     method: "PUT",
                     headers: {"Content-Type": "application/json"},
@@ -220,7 +219,7 @@
                     body: JSON.stringify(this.expenseId)
                 }
 
-               try {
+                try {
                     const response = await fetch("/api/expenses/delete", deleteExpenseRequest);
                     if (response.ok) {
                         this.isEdit = false;
@@ -232,7 +231,11 @@
                 } catch (error) {
                     console.error("Error occurred during expense deletion.", error);
                 }
-              }
+            },
+
+            formatNumber (num) {
+                return parseFloat(num).toFixed(2);
+            },
         },
     };
 </script>
