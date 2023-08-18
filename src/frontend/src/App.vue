@@ -83,7 +83,7 @@ html {
   }
 
   div {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
   }
@@ -111,7 +111,7 @@ html {
   }
   button {
     display: block;
-    width: 40%;
+    width: auto;
     margin: auto;
     padding: 10px;
     background-color: #4caf50;
