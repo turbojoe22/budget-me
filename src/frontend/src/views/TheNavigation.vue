@@ -14,6 +14,12 @@
       </li>
 
       <li>
+      <router-link to="/receipt/view">
+      <img src="@/assets/receipt.png" height="48" width="48" />
+      Receipts </router-link>
+      </li>
+
+      <li>
         <router-link to="/"><img src="../../../main/java/com/myPersonalFinance/budgetme/assets/leave.png" height="48" width="48"/>
           Logout</router-link>
       </li>
