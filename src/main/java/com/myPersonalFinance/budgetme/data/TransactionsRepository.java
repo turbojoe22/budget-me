@@ -10,4 +10,11 @@ import java.util.List;
 @Repository
 public interface TransactionsRepository extends JpaRepository<ActualTransaction, Integer> {
     List<ActualTransaction> findByUserId(Integer user_id);
+    List<ActualTransaction> findByUserIdOrderByDateDesc(Integer user_id);
+    List<ActualTransaction> findByUserIdOrderByDateAsc(Integer user_id);
+    List<ActualTransaction> findByUserIdOrderByAmountDesc(Integer user_id);
+    List<ActualTransaction> findByUserIdOrderByAmountAsc(Integer user_id);
+    List<ActualTransaction> findByUserIdOrderByCategoryDesc(Integer user_id);
+    List<ActualTransaction> findByUserIdOrderByCategoryAsc(Integer user_id);
+
 }
