@@ -6,6 +6,8 @@ import HomePage from "@/views/HomePage.vue";
 import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
 import CreateExpense from "@/views/CreateExpense.vue";
+import AddReceipts from "@/views/AddReceipts.vue";
+import ViewReceipts from "@/views/ViewReceipts.vue";
 
 
 
@@ -45,6 +47,16 @@ const routes = [
         path: "/expenses/create",
         name: "CreateExpense",
         component: CreateExpense,
+    },
+    {
+           path: "/receipt/add",
+           name: "AddReceipts",
+           component: AddReceipts,
+    },
+    {
+           path: "/receipt/view",
+           name: "ViewReceipts",
+           component: ViewReceipts,
     },
 
 

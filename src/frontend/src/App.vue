@@ -12,10 +12,30 @@
 
 
 <style>
+
+.nav-items {
+  display: flex;
+  justify-content: center;
+}
+.link-container {
+    display: flex;
+    align-items: center;
+  }
+.login-link, .register-link, .budget-logo, .logout-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-right: 10px;
+}
+.budget-logo img {
+    width: 64px
+}
 #page {
   background-color: rgba(245, 245, 245, 0.75);
   border-radius: .25em;
 }
+
 html {
   height:100%;
 }
@@ -28,10 +48,10 @@ body {
   animation:slide 3s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, rgba(102, 204, 51, 0.5) 50%, rgba(0, 153, 255, 0.5) 50%);
   bottom:0;
-  left:-50%;
+  left:-100%;
   opacity:.5;
   position:fixed;
-  right:-50%;
+  right:-100%;
   top:0;
   z-index:-1;
 }
@@ -83,12 +103,12 @@ html {
   }
 
   div {
-    max-width: 1200px;
+    max-width: 400px;
     margin: 0 auto;
     padding: 20px;
   }
 
-  h1,h2,p {
+  h1,h2 {
     margin-bottom: 20px;
     text-align: center;
   }
@@ -101,17 +121,19 @@ html {
     display: block;
     margin-bottom: 5px;
   }
+
   input[type="text"],
-  input[type="number"] {
+  input[type="number"],
+  input[type="password"] {
     width: 100%;
     padding: 5px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-  button {
+  button [type="submit"] {
     display: block;
-    width: auto;
+    width: 50%;
     margin: auto;
     padding: 10px;
     background-color: #4caf50;
