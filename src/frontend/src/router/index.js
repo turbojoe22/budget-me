@@ -60,6 +60,7 @@ const routes = [
         name: "CreateBudgetPeriod",
         component: CreateBudgetPeriod,
     },
+    {
            path: "/receipt/add",
            name: "AddReceipts",
            component: AddReceipts,

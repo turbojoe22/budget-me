@@ -12,12 +12,9 @@
   <br>
   <br>
     <h2>
-      Learn how to manage your money and become <br>debt-free, while saving for your
-      financial goals.
-      <router-link to="/expenses" custom v-slot="{ navigate }"><button @click="navigate" role="link">Start my budget</button></router-link>
-
+      <router-link to="/expenses" custom v-slot="{ navigate }"><button @click="navigate" role="link">Create Expenses</button></router-link>
     </h2>
-        <div>{{}}</div>
+
   </div>
 </template>
 <style>
