@@ -8,6 +8,8 @@ import ExpenseList from "@/views/ExpenseList.vue";
 import CreateExpense from "@/views/CreateExpense.vue";
 import BudgetPeriodList from "@/views/BudgetPeriodList.vue";
 import CreateBudgetPeriod from "@/views/CreateBudgetPeriod.vue";
+import AddReceipts from "@/views/AddReceipts.vue";
+import ViewReceipts from "@/views/ViewReceipts.vue";
 
 
 
@@ -58,6 +60,17 @@ const routes = [
         name: "CreateBudgetPeriod",
         component: CreateBudgetPeriod,
     },
+           path: "/receipt/add",
+           name: "AddReceipts",
+           component: AddReceipts,
+    },
+    {
+           path: "/receipt/view",
+           name: "ViewReceipts",
+           component: ViewReceipts,
+    },
+
+
 
 ];
     const router = createRouter({

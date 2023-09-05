@@ -4,6 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -12,24 +18,29 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int expenseId;
-    @Column
-    @NotBlank(message= "Name is required")
-    private String expenseName;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column
-    private int amount ;
+    @NotBlank(message = "Name is required")
+    private String expenseName;
+
+    @Column(precision=8, scale=2)
+    private double amount;
     @Column
     String frequency;
 
     @Column
     private boolean isRepeated;
     @Column
-    String dueDate;
+    LocalDate dueDate;
     @Column
     private String category;
 
 
-    public Expense(String expenseName,int amount, String frequency, boolean isRepeated, String dueDate, String category) {
+    public Expense(String expenseName, double amount, String frequency, boolean isRepeated, LocalDate dueDate, String category) {
         this.expenseName = expenseName;
         this.amount = amount;
         this.frequency = frequency;
@@ -52,12 +63,12 @@ public class Expense {
         this.expenseName = expenseName;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
     public void setAmount() {
-        this.amount = amount;
+        this.amount = Math.round(amount * 100) / 100.0;;
     }
 
     public String getFrequency() {
@@ -66,6 +77,9 @@ public class Expense {
 
     public void setFrequency(String frequency) {
         this.frequency = frequency;
+        if (this.frequency == "") {
+            this.frequency = "-";
+        }
     }
 
     public boolean getIsRepeated() {
@@ -76,12 +90,12 @@ public class Expense {
         this.isRepeated = isRepeated;
     }
 
-    public String getDueDate() {
+    public LocalDate getDueDate() {
         return dueDate;
     }
 
-    public void setDue_date(String due_date) {
-        this.dueDate = due_date;
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 
     public String getCategory() {
@@ -90,6 +104,14 @@ public class Expense {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
