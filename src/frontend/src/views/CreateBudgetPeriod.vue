@@ -1,0 +1,250 @@
+<template>
+  <div>
+    <h1>Create Budget Period</h1>
+
+     <!-- Input fields for start date and end date -->
+      <div class="date-input">
+
+            <div>
+                <label for="startDate">Budget Start:</label>
+                <input type="date" v-model="startDate" required />
+              </div>
+
+              <div>
+                 <label for="endDate">Budget End:</label>
+                 <input type="date" v-model="endDate" required />
+              </div>
+            </div>
+
+    <!-- Dropdown list to select an expense -->
+       <div class="expense-select">
+         <label for="expense">Select Expenses</label>
+         <select id="expense" v-model="selectedExpenses">
+           <option v-for="expense in expenses" :key="expense.expenseId" :value="expense.expenseName">
+             {{ expense.expenseName }}
+
+           </option>
+         </select>
+       <button @click="addExpense">Add</button>
+
+       </div>
+
+       <!-- List of selected expenses -->
+       <div v-if="selectedExpenses.length > 0" class="selected-expenses">
+         <h2>Selected Expenses:</h2>
+         <ul>
+           <li v-for="expense in selectedExpenses" :key="expense.expenseId">
+             {{ expense.expenseName }}
+             <button @click="removeExpense(expense.expenseId)">Remove</button>
+           </li>
+         </ul>
+       </div>
+
+
+       <!-- Expenses textarea -->
+       <div class="expenses-textarea">
+         <label for="expenses">Expenses:</label>
+         <textarea
+           id="expenses"
+           v-model="expensesText"
+           rows="5"
+           readonly
+         ></textarea>
+       </div>
+
+
+ <!-- Submit button to submit the form -->
+    <button @click="submitForm">Submit</button>
+
+</div>
+</template>
+
+<style>
+/* Center the content */
+.date-inputs {
+  display: flex;
+  gap:20px;
+  align-items: center;
+  justify-content: space-between;
+  width: 60%;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Style the dropdown list and "Add" button */
+.expense-select {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+label {
+  font-size: 16px;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style the list of selected expenses */
+.selected-expenses {
+  margin-top: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+/* Style the "Remove" button for each selected expense */
+li button {
+  margin-left: 10px;
+  padding: 4px 8px;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+li button:hover {
+  background-color: #c82333;
+}
+
+/* Style the Expenses textarea */
+.expenses-textarea {
+  margin-top: 20px;
+}
+
+textarea {
+  width: 50%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+</style>
+
+<script>
+export default {
+    data() {
+        return {
+        selectedExpense: '', // Store the selected expense ID
+        startDate: '', // Store the selected month
+        endDate: '', // Store the selected year
+      months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      expenses: [],
+      selectedExpenses: [], // Store the list of selected expenses
+    };
+  },
+  created () {
+  this.fetchExpenses();
+  },
+  computed: {
+    // Computed property to generate the expenses text for the textarea
+    expensesText() {
+      return this.selectedExpenses;
+    },
+  },
+  methods: {
+    addExpense() {
+    console.log("Hello");
+      // Find the selected expense object based on the selectedExpense ID
+      const selectedExpense = this.expenses.find((expense) => expense.id === this.selectedExpense);
+      if (selectedExpense) {
+        // Add the selected expense to the list of selectedExpenses
+        this.selectedExpenses.push(selectedExpense);
+        // Add the selected expense name to the expensesText
+        this.expensesText = this.selectedExpenses;
+        // Clear the selectedExpense to reset the dropdown to its default state
+        this.selectedExpense = '';
+      }
+    },
+    removeExpense() {
+      // Remove the selected expense from the list of selectedExpenses
+      this.selectedExpenses = this.selectedExpense;
+    },
+async fetchExpenses() {
+      try {
+        const response = await fetch('/api/expenses/expenses', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+});
+        if (response.ok) {
+          this.expenses = await response.json();
+          console.log(this.expenses);
+        } else {
+          console.error('Error fetching expenses');
+        }
+      } catch (error) {
+        console.error('Error fetching expenses', error);
+      }
+    },
+
+   async submitForm() {
+      const formData = {
+        selectedExpenses: this.selectedExpenses,
+        startDate: this.startDate,
+        endDate: this.endDate,
+         };
+                  console.log('Form data:', formData);
+
+
+          // Create the request options with the correct headers
+          try {
+               const response = await fetch('/api/budget-period-list/create-budget-period', {
+                 method: 'POST',
+                 headers: { 'Content-Type': 'application/json' },
+                 body: JSON.stringify(formData),
+               });
+
+
+
+                 // Send the data to the backend endpoint
+
+                 if (response.ok) {
+                   // Budget period was successfully saved in the backend
+                   this.$router.push('/budget-period-list'); // Redirect to a success page or wherever you want
+                 } else {
+                   // Handle errors or show appropriate error message
+                   // You can display the error message returned by the server
+                   const errorMessage = await response.text();
+                   console.error('Error while saving', errorMessage);
+                 }
+               } catch (error) {
+                 console.error('Error while saving', error);
+               }
+         },
+
+      },
+   }
+   </script>
+
+                 // Show a generic error message to the user
+                 // Optionally, you can also log the error for debugging purposes
+                 // You may want to display a more user-friendly error message
+                 // based on the type of error encountered (e.g., net)

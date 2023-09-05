@@ -6,6 +6,8 @@ import HomePage from "@/views/HomePage.vue";
 import TransactionsList from "@/views/TransactionsList.vue";
 import ExpenseList from "@/views/ExpenseList.vue";
 import CreateExpense from "@/views/CreateExpense.vue";
+import BudgetPeriodList from "@/views/BudgetPeriodList.vue";
+import CreateBudgetPeriod from "@/views/CreateBudgetPeriod.vue";
 import AddReceipts from "@/views/AddReceipts.vue";
 import ViewReceipts from "@/views/ViewReceipts.vue";
 
@@ -49,6 +51,15 @@ const routes = [
         component: CreateExpense,
     },
     {
+        path: "/budget-period-list",
+        name: "BudgetPeriodList",
+        component: BudgetPeriodList,
+    },
+    {
+        path: "/create-budget-period",
+        name: "CreateBudgetPeriod",
+        component: CreateBudgetPeriod,
+    },
            path: "/receipt/add",
            name: "AddReceipts",
            component: AddReceipts,
@@ -62,10 +73,10 @@ const routes = [
 
 
 ];
-const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes,
-    linkActiveClass: "active-link",
+    const router = createRouter({
+        history: createWebHistory(process.env.BASE_URL),
+        routes,
+        linkActiveClass: "active-link",
 
-});
-export default router;
+    });
+    export default router;
